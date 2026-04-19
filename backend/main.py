@@ -1,5 +1,10 @@
 from fastapi import FastAPI
 from passlib.context import CryptContext
+from . import models
+from .database import engine
+
+#автоматичне створення таблиць при запуску
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
