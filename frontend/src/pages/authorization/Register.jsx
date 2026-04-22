@@ -48,8 +48,8 @@ const Register = () => {
     <div className="register-container">
       <div className="register-card">
         <header className="header">
-          <div className="submit_active">Реєстрація</div>
-          <div className="submit">Вхід</div>
+          <Link to="/register" className="submit_active">Реєстрація</Link>
+          <Link to="/login" className="submit">Вхід</Link>
         </header>
         <div className="underline"></div>
 
@@ -67,9 +67,11 @@ const Register = () => {
           </div>
           <button type= "submit" className='button'>Реєстрація</button>
         </form>
+
         <footer>
           <img src="" alt="" />
         </footer>
+        
         <img src={authorizathion_img} alt="" className="side_view" />
       </div>
     </div>
