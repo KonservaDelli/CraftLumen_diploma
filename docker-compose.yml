@@ -27,5 +27,8 @@ services:
       - "5173:5173"
     environment:
       - VITE_API_URL=http://localhost:8000
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true           
+    tty: true
     depends_on:
       - backend
