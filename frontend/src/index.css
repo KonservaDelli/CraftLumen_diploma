@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-dark: #1C142E; 
+  --text-light: #F1EBFF;
+  --accent-purple: #776EED;
+  --accent-yellow: #FFCB58;
+  --pixel-border: 4px;
+}
+
