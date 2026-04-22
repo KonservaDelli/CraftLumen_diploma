@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 import models
 import schemas
 import tokens
@@ -6,14 +7,25 @@ from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 
 app = FastAPI()
-
-#Тимчасове підключення до бд для кожного запиту
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+#підключення до бд
 def get_db():
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
