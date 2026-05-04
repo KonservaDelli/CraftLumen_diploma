@@ -54,7 +54,7 @@ const Register = () => {
         <div className="underline"></div>
 
         <form className="form-content" onSubmit={handleSubmit}>
-          <div className="text">Реєсрація</div>
+          <div className="text">Реєстрація</div>
           {error && <div className="error-message" style={{color: 'red', fontSize: '14px'}}>{error}</div>}
           <div className="input">
             <input type="email" name = 'email' placeholder='Пошта' value={formData.email} onChange={handleChange} required/>
