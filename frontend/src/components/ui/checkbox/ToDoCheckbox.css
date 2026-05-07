@@ -1,0 +1,38 @@
+.checkbox-container {
+  display: inline-block;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  position: relative;
+}
+/*приховування стандартного чекбоксу*/
+.real-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.custom-checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent-purple);
+  border-radius: 50%;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.real-checkbox:checked + .custom-checkbox {
+  background-image: url('/check-icon.png');
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.real-checkbox:not(:checked) + .custom-checkbox:hover {
+  background-color: var(--accent-purple);
+    border-color: transparent;
+}
