@@ -1,0 +1,17 @@
+.date{
+    background-color: var(--accent-yellow);
+    color: var(--bg-dark);
+    width: 80px;
+    height: 20px;
+    border-radius: 0 15px 0 15px;
+    padding: 5px;
+    font-family: "Fira Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
