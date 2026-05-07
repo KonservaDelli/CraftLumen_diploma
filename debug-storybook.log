@@ -1,0 +1,14 @@
+[18:09:12.919] [INFO] [36mInitializing Storybook[39m
+[18:09:13.236] [DEBUG] Getting package.json info for C:\Users\Delli\cosplay_CraftLumen\package.json...
+[18:09:13.236] [DEBUG] Getting CLI versions from NPM for storybook...
+[18:09:13.236] [DEBUG] Executing command: npm info storybook version
+[18:09:14.040] [INFO] Adding Storybook version 10.3.6 to your project
+[18:09:14.042] [ERROR] Unable to initialize Storybook in this directory.
+
+Storybook couldn't detect a supported framework or configuration for your project. Make sure you're inside a framework project (e.g., React, Vue, Svelte, Angular, Next.js) and that its dependencies are installed.
+
+Tips:
+- Run init in an empty directory or create a new framework app first.
+- If this directory contains unrelated files, try a new directory for Storybook.
+[18:09:16.863] [PROMPT] Would you like to send anonymous crash reports to improve Storybook and fix bugs faster? {"choice":true}
+[18:09:16.865] [INFO] Storybook collects completely anonymous usage telemetry. We use it to shape Storybook's roadmap and prioritize features. You can learn more, including how to opt out, at https://storybook.js.org/telemetry

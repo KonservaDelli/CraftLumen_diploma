@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Register from './pages/authorization/Register';
 import Login from './pages/authorization/Login';
+import Home from './pages/home/Home';
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Login />} /> {/* По замовчуванню відкриваємо вхід */}
+        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
   );

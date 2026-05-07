@@ -1,0 +1,104 @@
+.login-container {
+    background-color: var(--bg-dark); 
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Tektur", sans-serif;
+    font-weight: 800;
+}
+.login-card{
+    background-color: var(--text-light);
+    width: 75%;
+    height: 90%;
+    border-radius: 50px 0px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    margin-top: 60px;
+    margin-left: 102px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 36%;
+    min-width: 250px;
+    height: 50px;
+    display: flex;
+    align-items: flex-end;  
+}
+.submit_active, .submit{
+    height: 100%;
+    flex: 1;          
+    white-space: nowrap; 
+    padding: 0 10px;
+    text-decoration: none; 
+}
+.submit_active{
+    display: flex;         
+    justify-content: center; 
+    align-items: center;
+    border-radius: 5px 5px 0 0;
+    background: var(--bg-dark);
+    color: var(--text-light);
+}
+.submit {
+    display: flex;         
+    justify-content: center; 
+    align-items: center;
+    border-radius: 5px 5px 0 0;
+    color: var(--bg-dark);
+}
+.underline{
+    margin-left: 102px;
+    width: 36%;
+    min-width: 250px;
+    height: 4px;
+    border-radius: 10px;
+    background: var(--bg-dark);
+}
+.form-content{
+    margin-top: 80px;
+    margin-left: 102px;
+}
+.text{
+    font-size: 40px;
+}
+.input{
+    display: flex;
+    padding-top: 40px;
+}
+.input input{
+  height: 40px;
+  width: 26%;
+  padding: 15px;
+  border: 3px solid var(--bg-dark);
+  border-radius: 15px 5px;
+  background: white;
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 400;
+}
+.form-content button{
+    margin-top: 40px;
+    width: 20%;
+    padding: 10px;
+    height: 40px;
+    background: var(--bg-dark);
+    border-radius: 10px;
+    color: var(--text-light);
+}
+
+.side_view{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 80%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right bottom;
+    z-index: 1;
+    image-rendering: pixelated;
+    pointer-events: none;
+}
