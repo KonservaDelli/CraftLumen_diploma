@@ -1,5 +1,5 @@
 .project-card-container {
-  background: var(--bg-dark); /* Трохи світліший за фон TodoList */
+  background: var(--bg-dark);
   border-radius: 16px;
   padding: 25px 22px;
   width: 100%;
@@ -9,7 +9,7 @@
 
 .project-card-title {
   color: var(--text-light);
-  margin: 0 0 25px 0; /* Відступ від заголовка до завдань */
+  margin: 0 0 25px 0;
   font-family: "Fira Sans", sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -26,7 +26,7 @@
 }
 .card-body {
   display: flex;
-  justify-content: space-between; /* Розштовхує текст і дати */
+  justify-content: space-between;
   gap: 15px;
 }
 
@@ -54,11 +54,10 @@
   padding: 4px 0;
 }
 
-/* СУЦІЛЬНА ЛІНІЯ */
 .line-wrapper .line {
   width: 2px;
   height: 100%;
-  background-color: var(--accent-purple) ; /* Фіолетовий */
+  background-color: var(--accent-purple) ;
 }
 
 .dates-column {

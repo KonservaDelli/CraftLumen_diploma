@@ -5,7 +5,7 @@ import './TodoList.css';
 const TodoList = ({ projects = [] }) => {
   const [allProjects, setAllProjects] = useState(projects);
 
-  // Функція для оновлення стану завдання
+  //Оновлення стану завдань
   const handleToggleTask = (projectIndex, taskIndex) => {
     const updatedProjects = [...allProjects];
     const task = updatedProjects[projectIndex].tasks[taskIndex];
@@ -13,20 +13,19 @@ const TodoList = ({ projects = [] }) => {
     setAllProjects(updatedProjects);
   };
 
-  // Рахуємо ТІЛЬКИ неперекреслені (невиконані) завдання
-  // Якщо хочеш рахувати всі, просто прибери .filter
+  //Лічильник активних завдань
   const activeTaskCount = allProjects.reduce((acc, proj) => 
     acc + proj.tasks.filter(t => !t.completed).length, 0
   );
   return (
-    <div className="todo-main-box">
+    <div className="todo-container">
       <div className="todo-header">
         <h2 className="todo-title">To-do list</h2>
         <span className="todo-list-count">({activeTaskCount})</span>
       </div>
       
       <div className="todo-scroll-area">
-        <div className="todo-content-list">
+        <div className="todo-content">
           {allProjects.map((project, index) => (
             <ProjectCard 
               key={index} 

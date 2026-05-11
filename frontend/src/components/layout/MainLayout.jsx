@@ -6,12 +6,11 @@ const MainLayout = ({ children }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Тут логіка очищення токенів, якщо є
-    navigate('/auth'); // Перехід на сторінку авторизації
+    navigate('/register');
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#1a1625' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-dark)' }}>
       <Sidebar onLogout={handleLogout} />
       <main style={{ 
         flexGrow: 1, 
