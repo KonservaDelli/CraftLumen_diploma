@@ -1,5 +1,5 @@
 .container {
-  background-color: var(--bg-dark);
+  background-color: var(--accent-purple-light);
   padding: 25px 20px;
   border-radius: 25px;
   width: 100%;
@@ -14,18 +14,19 @@
   align-items: baseline;
 }
 
-.title {
-  color: var(--text-light);
+.timeline-title {
+  font-size: 25px;
   font-family: "Tektur", sans-serif;
-  font-size: 26px;
   font-weight: 600;
-  margin: 0;
+  color: var(--text-light);
+  letter-spacing: 2%;
 }
 
 .festival-name {
   color: var(--text-light);
   font-family: "Fira Sans", sans-serif;
-  font-size: 16px;
+  font-size: 17px;
+  letter-spacing: 2%;
   font-weight: 400;
   opacity: 0.8;
 }

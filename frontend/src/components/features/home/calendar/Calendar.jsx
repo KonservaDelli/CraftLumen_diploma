@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import './Calendar.css';
 
-const Calendar = () => {
-  const [viewDate, setViewDate] = useState(new Date());
-  const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(today.getDate());
 
+const Calendar = ({ onDateChange }) => {
+  const [viewDate, setViewDate] = useState(new Date());
+  const [selectedFullDate, setSelectedFullDate] = useState(new Date());
   const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
-  
   const monthName = viewDate.toLocaleString('uk-UA', { month: 'long' });
   const year = viewDate.getFullYear();
 
-  //Генерації днів місяця
   const generateDays = () => {
     const startOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
     const endOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0);
@@ -24,28 +21,35 @@ const Calendar = () => {
       days.push({ day: '', currentMonth: false });
     }
 
-    //числа місяця
     for (let i = 1; i <= endOfMonth.getDate(); i++) {
       days.push({ day: i, currentMonth: true });
     }
-
     return days;
   };
 
   const handleDayClick = (day) => {
-    if (day) setSelectedDate(day);
+    if (day) {
+      const newFullDate = new Date(viewDate.getFullYear(), viewDate.getMonth(), day);
+      setSelectedFullDate(newFullDate);
+      if (onDateChange) onDateChange(newFullDate);
+    }
+  };
+
+  const changeMonth = (offset) => {
+    const newDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + offset, 1);
+    setViewDate(newDate);
   };
 
   return (
-    <div className="container">
-      <h3 className="text">Calendar</h3>
+    <div className="calendar-container"> {/* Змінено клас на більш унікальний */}
+      <h3 className="calendar-title">Calendar</h3>
       
-      <div className="header">
-        <button className="button" onClick={() => setViewDate(new Date(viewDate.setMonth(viewDate.getMonth() - 1)))}>&lt;</button>
+      <div className="calendar-header">
+        <button className="nav-button" onClick={() => changeMonth(-1)}>&lt;</button>
         <div className="date-display">
           {monthName.charAt(0).toUpperCase() + monthName.slice(1)} &nbsp; {year}
         </div>
-        <button className="button" onClick={() => setViewDate(new Date(viewDate.setMonth(viewDate.getMonth() + 1)))}>&gt;</button>
+        <button className="nav-button" onClick={() => changeMonth(1)}>&gt;</button>
       </div>
 
       <div className="calendar-grid">
@@ -53,11 +57,22 @@ const Calendar = () => {
           <div key={d} className="grid-weekday">{d}</div>
         ))}
         
-        {generateDays().map((item, index) => (
-          <div key={index} className={`grid-day ${!item.currentMonth ? 'empty' : ''} ${item.day === selectedDate && item.currentMonth ? 'active-day' : ''}`} onClick={() => handleDayClick(item.day)}>
-            <span>{item.day}</span>
-          </div>
-        ))}
+        {generateDays().map((item, index) => {
+          const isSelected = item.currentMonth && 
+            selectedFullDate.getDate() === item.day &&
+            selectedFullDate.getMonth() === viewDate.getMonth() &&
+            selectedFullDate.getFullYear() === viewDate.getFullYear();
+
+          return (
+            <div 
+              key={index} 
+              className={`grid-day ${!item.currentMonth ? 'empty' : ''} ${isSelected ? 'active-day' : ''}`} 
+              onClick={() => handleDayClick(item.day)}
+            >
+              <span>{item.day}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

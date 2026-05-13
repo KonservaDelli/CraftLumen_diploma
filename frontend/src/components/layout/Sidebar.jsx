@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 
 const Sidebar = ({ onLogout }) => {
-  const [activeTab, setActiveTab] = useState('Dashboard');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const menuItems = [
-    { name: 'Головна', icon: 'home-icon.png', activeIcon: 'home-icon-active.png' },
-    { name: 'Проєкти', icon: 'project-icon.png', activeIcon: 'project-icon-active.png' },
-    { name: 'Події', icon: 'event-icon.png', activeIcon: 'event-icon-active.png' },
-    { name: 'Профіль', icon: 'profile-icon.png', activeIcon: 'profile-icon-active.png' },
+    { name: 'Головна',path: '/home', icon: 'home-icon.png', activeIcon: 'home-icon-active.png' },
+    { name: 'Проєкти', path: '/projects', icon: 'project-icon.png', activeIcon: 'project-icon-active.png' },
+    { name: 'Події', path: '/events', icon: 'event-icon.png', activeIcon: 'event-icon-active.png' },
+    { name: 'Профіль', path: '/profile', icon: 'profile-icon.png', activeIcon: 'profile-icon-active.png' },
   ];
 
   return (
@@ -19,17 +21,16 @@ const Sidebar = ({ onLogout }) => {
 
       <nav className="sidebar-menu">
         {menuItems.map((item) => {
-          const isActive = activeTab === item.name;
+          const isActive = location.pathname === item.path;
           return (
             <div
               key={item.name}
               className={`menu-item ${isActive ? 'active' : ''}`}
-              onClick={() => setActiveTab(item.name)}
+              onClick={() => navigate(item.path)}
             >
               <div className="icon-wrapper">
                 <img 
-                  src={`${isActive ? item.activeIcon : item.icon}`} 
-                  alt={item.name} 
+                  src={isActive ? item.activeIcon : item.icon} alt={item.name}
                 />
               </div>
               <span>{item.name}</span>

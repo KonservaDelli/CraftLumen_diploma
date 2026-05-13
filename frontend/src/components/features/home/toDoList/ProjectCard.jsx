@@ -10,11 +10,11 @@ const ProjectCard = ({ title, tasks, onToggle }) => {
       <h4 className="project-card-title">{title}</h4>
       <div className="card-body">
         <div className="tasks-container">
-          {tasks.map((task, index) => (
-            <div key={index} className="task-row">
+          {tasks.map((task) => (
+            <div key={task.id} className="task-row">
               <Checkbox 
                 checked={task.completed} 
-                onChange={() => onToggle(index)}
+                onChange={() => onToggle(task.id)}
               />
               <span className={`task-text ${task.completed ? 'strikethrough' : ''}`}>
                 {task.text}
@@ -28,9 +28,9 @@ const ProjectCard = ({ title, tasks, onToggle }) => {
             <Line />
           </div>
           <div className="dates-column">
-            {tasks.map((task, index) => (
-              <div key={index} className="date-item-row">
-                <ToDoDate>{task.date}</ToDoDate>
+            {tasks.map((task) => (
+              <div key={task.id} className="date-item-row">
+                <ToDoDate>{task.displayDate}</ToDoDate>
               </div>
             ))}
           </div>
