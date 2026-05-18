@@ -1,0 +1,164 @@
+.projects-card-container {
+  width: 330px;
+  height: 450px; 
+  background-color: var(--purple-card); /* Темний колір фону за межами папки */
+  border-radius: 20px;
+  padding: 5px;
+  overflow: hidden;
+  position: relative;
+  border: 3px solid var(--accent-purple); /* Додаємо обводку для кращого вигляду */
+}
+
+.projects-card-banner {
+  width: 100%;
+  height: 400px; /* Трохи зменшуємо, щоб папка не перекривала все */
+  position: relative;
+  border-radius: 18px;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+/* Кнопка опцій (три крапки) */
+.options-trigger {
+  position: absolute;
+  bottom: 116px; /* Піднімаємо вище лінії стику */
+  right: 6px;
+  width: 46px;
+  height: 35px;
+  background-color: var(--purple-card);
+  border: none;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  z-index: 6;
+}
+
+.options-trigger span {
+  width: 4px;
+  height: 4px;
+  background-color: var(--bg-dark);
+  border-radius: 50%;
+}
+
+/* ГЕОМЕТРИЧНА ФОРМА ПАПКИ */
+.projects-card-content {
+  background-image: url('fon-card.svg');
+  margin-top: -130px; 
+  position: relative;
+  z-index: 5;
+  border-radius: 20px 0px 0px 0px; 
+  padding: 18px 10px 18px 15px;
+  min-height: 150px; 
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.projects-dates-text {
+  color: var(--text-light);
+  font-family: 'Urbanist', sans-serif;
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.projects-display-title {
+  color: var(--text-light);
+  font-family: 'Tektur', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  white-space: nowrap;      /* Забороняє перенос на новий рядок */
+  overflow: hidden;         /* Ховає все, що не помістилося */
+  text-overflow: ellipsis;  /* Додає три крапки в кінці */
+  display: block;           /* Обов'язково для роботи ефекту */
+  width: 100%;
+}
+
+.card-horizontal-line {
+  height: 2px; /* На макеті лінія тонка */
+  background-color: var(--bg-dark);
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.card-status-footer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.status-icons-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.status-box {
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Tektur', sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  border: var(--purple-card) solid 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding-top: 3px;
+}
+.percent-box {
+  z-index: 1;
+  width: 46px;
+  height: 46px;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  margin-top: 2px;
+}
+.warning-box {
+  z-index: 1;
+  width: 46px;
+  height: 46px;
+  background-color: var(--accent-yellow);
+  color: var(--bg-dark);
+  margin-top: 2px;
+}
+.status-icons-wrapper.single-icon .percent-box {
+  margin: 0 !important; /* Прибираємо будь-які напливи */
+  width: 54px; /* Робимо її одразу активного розміру, бо вона єдина */
+  height: 54px;
+}
+.percent-box:hover, .warning-box:hover {
+  transform: scale(1.05);
+}
+.percent-box.active {
+  width: 54px;
+  height: 54px;
+  z-index: 3; /* Виходить наперед */
+  margin-right: -18px;
+}
+.warning-box.active {
+  width: 54px;
+  height: 54px;
+  z-index: 3;
+  margin-left: -18px; /* Залишаємо наплив */
+}
+.warning-text-msg {
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+.warning-text-msg.status-progress {
+  color: var(--text-light);
+}
+.warning-text-msg.status-warning {
+  color: var(--accent-yellow); 
+}
