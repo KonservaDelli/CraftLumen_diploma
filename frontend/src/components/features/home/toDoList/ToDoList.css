@@ -2,12 +2,13 @@
   background-color: var(--accent-purple-light);
   border-radius: 24px;
   padding: 14px 14px 0 14px;
-  height: 600px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
   width: auto;
+  margin: 50px 0 0 0;
 }
 
 .todo-scroll-area {
@@ -16,7 +17,7 @@
   padding: 0 10px 10px 10px;
   /* Для Firefox */
   scrollbar-width: none; 
-  /* Для Internet Explorer та Edge */
+  /* Для Internet Explorer, Edge */
   -ms-overflow-style: none;
   padding-bottom: 40px;
 }
@@ -62,4 +63,14 @@
   background: linear-gradient(to bottom, transparent 0%, #2E264F 50%, var(--accent-purple-light) 100%);
   pointer-events: none;
   z-index: 5;
+}
+
+.no-tasks {
+  font-size: 19px;
+  color: var(--text-light);
+  font-family: "Fira Sans", sans-serif;
+  letter-spacing: 3%;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 50px;
 }
