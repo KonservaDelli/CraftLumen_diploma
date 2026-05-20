@@ -4,14 +4,17 @@
   justify-content: center;
   padding: 18px 15px;
   border-radius: 17px;
+  width: 100%;
   font-family: 'Fira Sans', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
+  letter-spacing: 3%;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
+  white-space: nowrap; 
+  box-sizing: border-box;
   gap: 8px;
-  min-width: 100px;
 }
 
 /*Дизайн прозорий*/

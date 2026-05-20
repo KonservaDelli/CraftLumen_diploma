@@ -1,17 +1,13 @@
-.projects-page-layout {
-  display: flex;
-  height: 100vh;
-  background-color: var(--bg-dark);
-  overflow: hidden; /* Щоб не було подвійного скролу */
-}
-
+/* Внутрішній контейнер, який знаходиться ПРАВОРУЧ від сайдбару */
 .projects-main-content {
   flex-grow: 1;
-  padding: 40px 50px;
+  padding: 40px 70px 0 70px; /* Прибираємо нижній падінг, бо скрол всередині */
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh; /* Займає всю висоту, яку дає MainLayout */
   box-sizing: border-box;
+  background-color: var(--bg-dark);
+  overflow: hidden;
 }
 
 .header-top-row {
@@ -26,47 +22,71 @@
   color: var(--text-light);
   font-size: 48px;
   margin: 0;
+  font-weight: 600;
 }
 
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
   margin-bottom: 20px;
+  width: 100%;
+}
+
+.header-controls > :first-child { 
+  flex: 3; /* Пошук буде розширюватися активніше (коефіцієнт 3) */
 }
 
 .buttons-group {
   display: flex;
-  gap: 15px;
+  gap: 20px;
+  flex: 1; /* Кнопки теж розширюються, але в 3 рази повільніше за пошук */
+  min-width: fit-content;
 }
 
 .card-horizontal-divider {
-  height: 2px;
-  background-color: var(--accent-purple-light);
+  height: 4px;
+  background-color: var(--accent-purple);
   width: 100%;
   margin-bottom: 30px;
+  border-radius: 2px;
 }
 
 /* Контейнер для карток зі скролом */
 .projects-scroll-container {
   flex-grow: 1;
   overflow-y: auto;
-  padding-right: 10px;
+  overflow-x: hidden; /* ПРИБИРАЄ нижній скролбар */
+  
+  /* Виштовхуємо скролбар до краю екрана за межі падінгів батька */
+  margin-right: -57px; 
+  /* Повертаємо сітку з картками на місце, щоб вони не липли до краю */
+  padding-right: 57px; 
+  
+  padding-bottom: 40px;
+  box-sizing: border-box;
 }
 
 /* Налаштування самого гріда */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-  gap: 40px 30px;
-  padding-bottom: 50px;
+  justify-content: start; 
+  grid-template-columns: repeat(auto-fill, minmax(330px, 330px));
+  /* Робимо зазор між картками, який трохи адаптується */
+  gap: 30px 20px; 
+  
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Стилізація скролбару */
+/* Стилізація скролбару для сучасного вигляду */
 .projects-scroll-container::-webkit-scrollbar {
   width: 6px;
 }
+.projects-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
 .projects-scroll-container::-webkit-scrollbar-thumb {
-  background: var(--accent-purple);
+  background: var(--accent-purple-light);
   border-radius: 10px;
 }

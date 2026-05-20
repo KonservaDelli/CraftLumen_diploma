@@ -49,18 +49,27 @@ const ProjectsCard = ({ projects }) => {
         <h3 className="projects-display-title">{projects.title}</h3>
         <div className="card-horizontal-line"></div>
 
-        <div className="card-status-footer">
+        <div className="card-status-footer" onClick={(e) => e.stopPropagation()}> 
+          {/* Додаємо onClick на весь футер, щоб кліки по тексту теж не перекидали на сторінку */}
+          
           <div className={`status-icons-wrapper ${!hasUrgentTasks ? 'single-icon' : ''}`}>
             <div 
               className={`status-box percent-box ${activeStatus === 'progress' ? 'active' : ''}`}
-              onClick={(e) => { e.stopPropagation(); setActiveStatus('progress'); }}
+              onClick={(e) => {
+                e.stopPropagation(); // Зупиняємо клік тут
+                setActiveStatus('progress');
+              }}
             >
               %
             </div>
+
             {hasUrgentTasks && (
               <div 
                 className={`status-box warning-box ${activeStatus === 'warning' ? 'active' : ''}`}
-                onClick={(e) => { e.stopPropagation(); setActiveStatus('warning'); }}
+                onClick={(e) => {
+                  e.stopPropagation(); // Зупиняємо клік тут
+                  setActiveStatus('warning');
+                }}
               >
                 !
               </div>

@@ -23,28 +23,31 @@ const Projects = () => {
 
   return (
     <MainLayout>
-      <div className="projects-container-inner">
+      {/* Клас projects-main-content тепер обгортає все всередині лейауту */}
+      <div className="projects-main-content">
         <header className="projects-header">
           <div className="header-top-row">
             <h1 className="page-title-main">Бібліотека проєктів</h1>
-            <UserAvatar src="/my-avatar.png" size={70} />
+            <UserAvatar size={70} />
           </div>
-          
+          <div className="card-horizontal-divider"></div>
           <div className="header-controls">
             <SearchProject onSearch={handleSearch} />
             <div className="buttons-group">
               <Button text="Створити проєкт" variant="primary" />
-              <Button text="AI створення" variant="accent" iconName="ai-magic-icon.png" />
+              <Button text="AI створення" variant="accent" iconName="magic-icon.png" />
             </div>
           </div>
         </header>
 
-        <div className="card-horizontal-divider"></div>
 
-        <div className="projects-grid">
-          {filteredProjects.map(project => (
-            <ProjectsCard key={project.id} projects={project} />
-          ))}
+        {/* Додаємо scroll-container, щоб скролилися лише картки */}
+        <div className="projects-scroll-container">
+          <div className="projects-grid">
+            {filteredProjects.map(project => (
+              <ProjectsCard key={project.id} projects={project} />
+            ))}
+          </div>
         </div>
       </div>
     </MainLayout>
