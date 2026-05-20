@@ -1,0 +1,21 @@
+.user-avatar-container {
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--purple-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-avatar-container:hover {
+  box-shadow: 0 0 12px var(--purple-card);
+}
+
+.user-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /*фото не деформується*/
+  display: block;
+}
