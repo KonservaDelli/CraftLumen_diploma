@@ -1,6 +1,6 @@
 .project-card-container {
   background: var(--bg-dark);
-  border-radius: 16px;
+  border-radius: 0 15px;
   padding: 25px 22px;
   width: 100%;
   box-sizing: border-box;
@@ -10,15 +10,17 @@
 .project-card-title {
   color: var(--text-light);
   margin: 0 0 25px 0;
-  font-family: "Fira Sans", sans-serif;
+  font-family: "Tektur", sans-serif;
+  letter-spacing: 4%;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .task-text{
   color: var(--text-light);
   font-family: "Fira Sans", sans-serif;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 300;
+  letter-spacing: 2%;
 }
 .strikethrough {
   text-decoration: line-through;

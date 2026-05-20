@@ -1,0 +1,50 @@
+.custom-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 15px;
+  border-radius: 17px;
+  width: 100%;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 15px;
+  letter-spacing: 3%;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  white-space: nowrap; 
+  box-sizing: border-box;
+  gap: 8px;
+}
+
+/*Дизайн прозорий*/
+.btn-primary {
+  background-color:transparent;
+  color: var(--text-light);
+  border: 2px solid var(--accent-purple);
+  box-shadow: 0 0 10px var(--purple-card);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 16px var(--purple-card);
+  transform: translateY(-1px);
+}
+
+/*Дизайн жовтий*/
+.btn-accent {
+  background: linear-gradient(to bottom, var(--accent-yellow) 40%, var(--text-light) 100%);
+  color: var(--bg-dark);
+  box-shadow: 0 0 10px #FFCB5899;
+}
+
+.btn-accent:hover {
+  box-shadow: 0 0 16px #FFCB5899;
+  transform: translateY(-1px);
+}
+
+.button-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  padding-bottom: 3px;
+}

@@ -14,7 +14,6 @@ const MainLayout = ({ children }) => {
       <Sidebar onLogout={handleLogout} />
       <main style={{ 
         flexGrow: 1, 
-        padding: '40px', 
         height: '100vh', 
         overflowY: 'auto' 
       }}>
