@@ -1,0 +1,72 @@
+.projects-page-layout {
+  display: flex;
+  height: 100vh;
+  background-color: var(--bg-dark);
+  overflow: hidden; /* Щоб не було подвійного скролу */
+}
+
+.projects-main-content {
+  flex-grow: 1;
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.page-title-main {
+  font-family: 'Tektur', sans-serif;
+  color: var(--text-light);
+  font-size: 48px;
+  margin: 0;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.buttons-group {
+  display: flex;
+  gap: 15px;
+}
+
+.card-horizontal-divider {
+  height: 2px;
+  background-color: var(--accent-purple-light);
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+/* Контейнер для карток зі скролом */
+.projects-scroll-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Налаштування самого гріда */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 40px 30px;
+  padding-bottom: 50px;
+}
+
+/* Стилізація скролбару */
+.projects-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.projects-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--accent-purple);
+  border-radius: 10px;
+}
