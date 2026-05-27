@@ -43,7 +43,6 @@ const ImageUpload = ({ onFileSelect }) => {
     e.stopPropagation(); 
     inputRef.current.click();
   };
-
   return (
     <div 
       className={`upload-wrapper ${dragActive ? 'drag-active' : ''} ${preview ? 'has-preview' : ''}`}
@@ -73,7 +72,7 @@ const ImageUpload = ({ onFileSelect }) => {
           <div className="empty-state-elements">
             <p className="upload-title">
               ЗАВАНТАЖИТИ ЗОБРАЖЕННЯ<br/>
-              <span>Для АІ генерації проєкта</span>
+              <span>Обов'язково для АІ генерації</span>
             </p>
             
             <div className="upload-icon-box">

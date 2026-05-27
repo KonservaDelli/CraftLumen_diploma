@@ -1,0 +1,117 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(14, 11, 22, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-container {
+  background-color: var(--bg-dark);
+  border: 4px solid var(--accent-purple);
+  border-radius: 0 40px 0 40px;
+  width: 700px;
+  max-width: 70%;
+  padding: 30px 40px 30px 40px;
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: 0 0 40px rgba(143, 135, 241, 0.15);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 42px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  opacity: 1;
+}
+
+.modal-title {
+  font-family: 'Tektur', sans-serif;
+  color: var(--text-light);
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 30px;
+  letter-spacing: 9%;
+}
+
+.modal-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+.modal-row-upload {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-row-upload .upload-wrapper {
+  width: 100%;
+}
+
+.modal-inputs-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.modal-label {
+  color: var(--text-light);
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.modal-input-group .base-input-wrapper,
+.modal-input-group .search-input-container {
+  max-width: 100%;
+}
+
+.modal-actions-row {
+  display: flex;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.important-star {
+  color: var(--accent-yellow);
+  font-size: 20px;
+  margin-left: 4px;
+}
+
+.btn-disabled {
+  opacity: 0.3 !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+  box-shadow: none !important;
+  transform: none !important;
+}

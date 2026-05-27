@@ -6,15 +6,14 @@
   background-color: transparent;
   border: 2px solid var(--purple-card);
   border-radius: 15px;
-  padding: 4px 30px;
-  box-shadow: 0 0 15px var(--accent-purple-light);
+  padding: 4px 24px;
   transition: all 0.3s ease;
   box-sizing: border-box;
+  height: 50px;
 }
 
 .base-input-wrapper:focus-within {
-  box-shadow: 0 0 22px var(--purple-card);
-  border-color: var(--accent-purple);
+  box-shadow: 0 0 7px var(--purple-card);
 }
 
 .base-input-element {
@@ -24,9 +23,9 @@
   outline: none;
   color: var(--text-light);
   font-family: 'Fira Sans', sans-serif;
-  font-size: 20px;
-  letter-spacing: 0.06em;
-  padding: 12px 0;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  padding: 0;
 }
 
 .base-input-element::placeholder {

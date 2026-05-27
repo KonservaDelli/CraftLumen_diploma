@@ -6,11 +6,16 @@ const SearchInput = ({
   placeholder = "Пошук...", 
   showIcon = true, 
   suggestions = [], 
-  onSuggestionSelect 
+  onSuggestionSelect,
+  value
 }) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(value || "");
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    setQuery(value || "");
+  }, [value]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -35,9 +40,12 @@ const SearchInput = ({
     if (onSuggestionSelect) onSuggestionSelect(suggestion);
   };
 
+  const isDropdownVisible = isOpen && query && suggestions.length > 0;
+
   return (
     <div className="search-input-wrapper" ref={wrapperRef}>
-      <div className="search-input-container">
+      {/* drop-open прибирає заокруглення коли відкрито список */}
+      <div className={`search-input-container ${isDropdownVisible ? 'drop-open' : ''}`}>
         <input
           type="text"
           className="search-input-field"
@@ -53,8 +61,7 @@ const SearchInput = ({
         )}
       </div>
 
-      {/* При вводі та знеаходжені поява спливаючого вікна*/}
-      {isOpen && query && suggestions.length > 0 && (
+      {isDropdownVisible && (
         <ul className="search-suggestions-list">
           {suggestions.map((item, index) => (
             <li 

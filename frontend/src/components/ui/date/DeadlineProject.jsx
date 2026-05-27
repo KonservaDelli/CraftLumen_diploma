@@ -8,9 +8,9 @@ const DeadlineProject = ({
 }) => {
   const dateInputRef = useRef(null);
 
-  // Викликає вікно календаря при кліку на іконку
+  // Викликає вікно календаря
   const handleIconClick = (e) => {
-    e.stopPropagation(); // Зупиняємо спливання, щоб не збивати фокус з тексту
+    e.stopPropagation(); 
     if (dateInputRef.current) {
       if (typeof dateInputRef.current.showPicker === 'function') {
         dateInputRef.current.showPicker();
@@ -20,7 +20,7 @@ const DeadlineProject = ({
     }
   };
 
-  // Конвертує дату з календаря (YYYY-MM-DD) у формат макету (ДД.ММ.РРРР)
+  // Конвертує дату з календаря
   const handleCalendarChange = (e) => {
     const isoDate = e.target.value;
     if (!isoDate) return;
@@ -28,7 +28,6 @@ const DeadlineProject = ({
     onChange?.(`${day}.${month}.${year}`);
   };
 
-  // Конвертує текстову дату назад у ISO для коректного відображення у календарі
   const getIsoValue = () => {
     if (!value || !value.includes('.')) return "";
     const [day, month, year] = value.split(".");
@@ -40,7 +39,6 @@ const DeadlineProject = ({
 
   return (
     <div className="deadline-input-wrapper">
-      {/* Справжній текстовий інпут для ручного введення */}
       <input
         type="text"
         className={`deadline-text-input ${value ? 'has-value' : ''}`}
@@ -50,7 +48,6 @@ const DeadlineProject = ({
         maxLength={10}
       />
 
-      {/* Іконка-тригер календаря */}
       <div className="deadline-icon-box" onClick={handleIconClick}>
         <svg 
           width="24" 
@@ -69,7 +66,6 @@ const DeadlineProject = ({
           <line x1="3" y1="10" x2="21" y2="10" />
         </svg>
 
-        {/* Прихований рідний інпут дати, зміщений під іконку */}
         <input
           type="date"
           ref={dateInputRef}

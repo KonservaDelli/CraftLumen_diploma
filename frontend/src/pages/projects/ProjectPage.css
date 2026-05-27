@@ -1,0 +1,57 @@
+.project-details-container {
+  flex-grow: 1;
+  padding: 40px 50px;
+  background-color: var(--bg-dark);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.project-details-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.project-details-header .back-btn {
+  width: auto;
+  padding: 10px 20px;
+}
+
+.project-details-title {
+  font-family: 'Tektur', sans-serif;
+  color: var(--text-light);
+  font-size: 36px;
+  margin: 0;
+}
+
+.project-details-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.placeholder-info-box {
+  background-color: var(--accent-purple-light);
+  border: 2px dashed var(--accent-purple);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+}
+
+.placeholder-info-box h3 {
+  font-family: 'Tektur', sans-serif;
+  color: var(--text-light);
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.placeholder-info-box p {
+  font-family: 'Fira Sans', sans-serif;
+  color: var(--text-light);
+  opacity: 0.8;
+  font-size: 16px;
+  line-height: 1.6;
+}

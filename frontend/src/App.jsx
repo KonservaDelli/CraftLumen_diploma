@@ -6,6 +6,7 @@ import Home from './pages/home/Home';
 import Projects from './pages/projects/Projects';
 import Events from './pages/events/Events';
 import Profile from './pages/profile/Profile';
+import ProjectPage from './pages/projects/ProjectPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/events" element={<Events />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/project/:projectSlug" element={<ProjectPage />} />
         <Route path="/" element={<Navigate to="/home" />} />
       </Routes>
   );
