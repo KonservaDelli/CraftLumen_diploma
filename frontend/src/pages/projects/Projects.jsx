@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✨ Хук для навігації
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/layout/MainLayout';
 import SearchProject from '../../components/ui/input/SearchInput';
 import Button from '../../components/ui/button/Button';
@@ -13,13 +13,6 @@ const UKRAINIAN_MONTHS = [
   "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"
 ];
 
-const getFormattedToday = () => {
-  const today = new Date();
-  const day = today.getDate();
-  const monthText = UKRAINIAN_MONTHS[today.getMonth()];
-  return `${day} ${monthText}`;
-};
-
 const formatStringDate = (dateStr) => {
   if (!dateStr || !dateStr.includes('.')) return null;
   const [dayStr, monthStr] = dateStr.split('.');
@@ -29,59 +22,86 @@ const formatStringDate = (dateStr) => {
   return `${day} ${UKRAINIAN_MONTHS[monthIndex]}`;
 };
 
-const convertToSlug = (text) => {
-  const ukrToEng = {
-    'а': 'a', 'б': 'b', 'в': 'v', 'г': 'h', 'ґ': 'g', 'д': 'd', 'е': 'e', 'є': 'ye', 'ж': 'zh', 'з': 'z',
-    'и': 'y', 'і': 'i', 'ї': 'yi', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p',
-    'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch',
-    'ь': '', 'ю': 'yu', 'я': 'ya', ' ': '-', ' е': 'e'
-  };
-
-  return text
-    .toLowerCase()
-    .trim() 
-    .split('')
-    .map(char => ukrToEng[char] !== undefined ? ukrToEng[char] : char)
-    .join('')
-    .replace(/[^a-z0-9-_]/g, '') //видалення спецсимволів
-    .replace(/-+/g, '-');
-};
-
 const Projects = () => {
   const navigate = useNavigate();
-  const [projects, setProjects] = useState([
-    { id: 1, title: 'Сейлор Мун', startDate: '1 травня', endDate: '2 червня', progress: 65, urgentTasksCount: 2, image: null },
-    { id: 2, title: 'Відьмак', startDate: '10 квітня', progress: 30, urgentTasksCount: 0, image: null },
-    { id: 3, title: 'Кіберпанк', startDate: '5 травня', endDate: '15 червня', progress: 10, urgentTasksCount: 5, image: null },
-  ]);
-
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   
+  //Завантаження всіх проєктів при старті сторінки
+  useEffect(() => {
+    fetch('http://localhost:8000/api/projects')
+      .then(res => res.json())
+      .then(data => {
+        const mappedProjects = data.map(project => ({
+          id: project.id,
+          title: project.title,
+          slug: project.slug,
+          startDate: project.start_date ? formatStringDate(project.start_date) : '',
+          endDate: project.end_date ? formatStringDate(project.end_date) : null,
+          progress: project.progress,
+          urgentTasksCount: 0,
+          image: project.image_url
+        }));
+        setProjects(mappedProjects);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error("Помилка завантаження бібліотеки:", err);
+        setIsLoading(false);
+      });
+  }, []);
+
   const filteredProjects = projects.filter(project =>
     project.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleSearch = (query) => setSearchQuery(query);
   
-  const handleAiGenerate = (newData) => {
-    const projectTitle = newData.title || "Новий АІ Проєкт";
-    const projectSlug = convertToSlug(projectTitle) || `project-${Date.now()}`;
+  // Збереження проєкту
+  const handleAiGenerate = async (newData) => {
+    try {
+      const formData = new FormData();
+      formData.append('title', newData.title || "Новий АІ Проєкт");
+      if (newData.endDate) {
+        formData.append('endDate', newData.endDate);
+      }
+      if (newData.image) {
+        formData.append('image', newData.image);
+      }
 
-    const newProjectObj = {
-      id: Date.now(),
-      title: projectTitle,
-      slug: projectSlug,
-      startDate: getFormattedToday(), 
-      endDate: newData.endDate ? formatStringDate(newData.endDate) : null,
-      progress: 0,
-      urgentTasksCount: 0,
-      image: newData.image ? URL.createObjectURL(newData.image) : null
-    };
+      const response = await fetch('http://localhost:8000/api/projects', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!response.ok) throw new Error("Помилка при створенні проєкту на сервері");
+      
+      const createdProject = await response.json();
+      setIsAiModalOpen(false);
+      navigate(`/project/${createdProject.slug}`);
+    } catch (error) {
+      console.error("Не вдалося згенерувати проєкт:", error);
+      alert("Сталася помилка при збереженні проєкту в базу даних");
+    }
+  };
+  // Видалення проєкту
+  const handleDeleteProject = async (projectId) => {
+    const isConfirmed = window.confirm("Ви впевнені, що хочете видалити цей проєкт?");
+    if (!isConfirmed) return;
+    try {
+      const response = await fetch(`http://localhost:8000/api/projects/${projectId}`, {
+        method: 'DELETE'
+      });
 
-    setProjects([newProjectObj, ...projects]);
-    setIsAiModalOpen(false);
-    navigate(`/project/${projectSlug}`);
+      if (!response.ok) throw new Error("Не вдалося видалити проєкт на сервері");
+
+      setProjects(prevProjects => prevProjects.filter(p => p.id !== projectId));
+    } catch (error) {
+      console.error("Помилка при видаленні проєкту:", error);
+      alert("Сталася помилка при видаленні проєкту з бази даних");
+    }
   };
 
   return (
@@ -103,11 +123,15 @@ const Projects = () => {
         </header>
 
         <div className="projects-scroll-container">
-          <div className="projects-grid">
-            {filteredProjects.map(project => (
-              <ProjectsCard key={project.id} projects={project} />
-            ))}
-          </div>
+          {isLoading ? (
+            <p style={{ color: '#fff', textAlign: 'center', marginTop: '40px' }}>Завантаження бібліотеки проєктів...</p>
+          ) : (
+            <div className="projects-grid">
+              {filteredProjects.map(project => (
+                <ProjectsCard key={project.id} projects={project} onDelete={handleDeleteProject}/>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <AiCreateModal 

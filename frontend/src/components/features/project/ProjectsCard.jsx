@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './ProjectsCard.css';
 import { useNavigate } from 'react-router-dom';
 
-const ProjectsCard = ({ projects }) => {
+const ProjectsCard = ({ projects, onDelete }) => {
   const navigate = useNavigate();
   const [showOptions, setShowOptions] = useState(false);
   const hasUrgentTasks = projects.urgentTasksCount > 0;
@@ -20,7 +20,10 @@ const ProjectsCard = ({ projects }) => {
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    console.log("Видалити проєкт", projects.id);
+    setShowOptions(false);
+    if (onDelete) {
+      onDelete(projects.id);
+    }
   };
 
   const renderDate = () => {

@@ -75,3 +75,11 @@
   object-fit: contain;
   padding-bottom: 3px;
 }
+
+/*Дизайн видалення проєкту*/
+.btn-danger {
+  background-color: transparent;
+  color: var(--accent-yellow);
+  border: 2px solid var(--accent-yellow);
+  box-shadow: 0 0 10px var(--accent-yellow);
+}
