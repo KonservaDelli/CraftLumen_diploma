@@ -1,0 +1,46 @@
+.square-neon-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.square-btn-content {
+  width: 46px;
+  height: 46px;
+  background-color: transparent;
+  border: 2px solid var(--purple-card);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 8px var(--purple-card);
+  transition: all 0.2s ease-in-out;
+}
+
+.dots-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dots-icon span {
+  width: 5px;
+  height: 5px;
+  background-color: var(--accent-purple);
+  border-radius: 50%;
+  display: block;
+}
+
+.back-arrow-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.square-neon-btn:hover .square-btn-content {
+  box-shadow: 0 0 12px var(--accent-purple);
+}
