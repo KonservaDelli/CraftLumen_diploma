@@ -1,0 +1,35 @@
+.palet-block {
+  width: 125px;
+  min-height: 100px;
+  border-radius: 0 25px 0 25px; 
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 0 2px 1px var(--bg-dark);
+}
+
+.palet-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.palet-hex-code {
+  color: var(--text-light);
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.palet-label {
+  color: var(--text-light);
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  word-wrap: break-word;
+}

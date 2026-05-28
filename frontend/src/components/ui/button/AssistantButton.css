@@ -1,0 +1,46 @@
+.assistant-switch-root {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.switch-track {
+  width: 65px;
+  height: 28px;
+  background-color: var(--bg-dark);
+  border-radius: 10px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.switch-thumb {
+  width: 42px;
+  height: 34px; 
+  position: absolute;
+  top: -3px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.is-active .switch-thumb {
+  background-color: var(--accent-yellow);
+  color: var(--bg-dark);
+  transform: translateX(25px);
+  box-shadow: 0 0 5px #FFCB5899;
+}
+
+.is-inactive .switch-thumb {
+  background-color: #8A7BD8;
+  color: var(--bg-dark);
+  box-shadow: 0 0 10px var(--accent-purple);
+}

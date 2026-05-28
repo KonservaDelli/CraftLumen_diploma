@@ -10,7 +10,6 @@ const ProjectAvatar = ({ src, alt = "Project Avatar" }) => {
         src={imageSource} 
         alt={alt} 
         className="avatar-image-content" 
-        // Додатковий захист: якщо файл не завантажився (помилка 404), ставимо дефолт
         onError={(e) => { e.target.src = "default-project.jpg"; }}
     />
     </div>
