@@ -1,0 +1,44 @@
+.textarea-wrapper {
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  background-color: transparent;
+  border: 2px solid var(--purple-card);
+  border-radius: 15px;
+  padding: 20px 24px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.textarea-wrapper:focus-within {
+  box-shadow: 0 0 7px var(--purple-card);
+}
+
+.textarea-element {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-light);
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1%;
+  line-height: 1.5;
+  resize: none;
+  min-height: 80px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.textarea-element::placeholder {
+  color: var(--text-light);
+  opacity: 0.6;
+}
+
+.textarea-element::-webkit-scrollbar {
+  width: 6px;
+}
+.textarea-element::-webkit-scrollbar-thumb {
+  background: var(--purple-card);
+  border-radius: 10px;
+}

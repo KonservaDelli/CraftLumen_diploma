@@ -6,6 +6,7 @@ import Button from '../../components/ui/button/Button';
 import UserAvatar from '../../components/ui/icon/UserAvatar';
 import ProjectsCard from '../../components/features/project/ProjectsCard';
 import AiCreateModal from '../../components/features/project/AiCreateModal';
+import ManualCreateModal from '../../components/features/project/ManualCreateModal';
 import './Projects.css';
 
 const UKRAINIAN_MONTHS = [
@@ -28,7 +29,8 @@ const Projects = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
-  
+  const [isManualModalOpen, setIsManualModalOpen] = useState(false);
+
   //Завантаження всіх проєктів при старті сторінки
   useEffect(() => {
     fetch('http://localhost:8000/api/projects')
@@ -59,7 +61,7 @@ const Projects = () => {
 
   const handleSearch = (query) => setSearchQuery(query);
   
-  // Збереження проєкту
+  // Збереження проєкту аі
   const handleAiGenerate = async (newData) => {
     try {
       const formData = new FormData();
@@ -84,6 +86,43 @@ const Projects = () => {
     } catch (error) {
       console.error("Не вдалося згенерувати проєкт:", error);
       alert("Сталася помилка при збереженні проєкту в базу даних");
+    }
+  };
+  // Збереження проєкту ручне
+  const handleManualCreate = async (formDataFields) => {
+    try {
+      const formData = new FormData();
+      formData.append('title', formDataFields.title);
+      
+      // Передаємо блоки/розділи завдань рядком (бекенд розпарсить за комою чи з нового рядка)
+      formData.append('sections', formDataFields.sections);
+      
+      if (formDataFields.event) {
+        formData.append('event_name', formDataFields.event);
+      }
+      if (formDataFields.endDate) {
+        formData.append('endDate', formDataFields.endDate);
+      }
+      if (formDataFields.image) {
+        formData.append('image', formDataFields.image);
+      }
+
+      const response = await fetch('http://localhost:8000/api/projects', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) throw new Error("Не вдалося створити проєкт вручну");
+
+      const createdProject = await response.json();
+      setIsManualModalOpen(false);
+      
+      // ✨ Миттєво перенаправляємо користувача на сторінку створеного персонажа
+      navigate(`/project/${createdProject.slug}`);
+
+    } catch (error) {
+      console.error("Помилка ручного створення проєкту:", error);
+      alert("Не вдалося зберегти проєкт. Перевірте з'єднання з сервером.");
     }
   };
   // Видалення проєкту
@@ -116,7 +155,7 @@ const Projects = () => {
           <div className="header-controls">
             <SearchProject onSearch={handleSearch} />
             <div className="buttons-group">
-              <Button text="Створити проєкт" variant="primary" />
+              <Button text="Створити проєкт" variant="primary" onClick={() => setIsManualModalOpen(true)}/>
               <Button text="AI створення" variant="accent" iconName="magic-icon.png" onClick={() => setIsAiModalOpen(true)}/>
             </div>
           </div>
@@ -138,6 +177,12 @@ const Projects = () => {
         isOpen={isAiModalOpen} 
         onClose={() => setIsAiModalOpen(false)} 
         onGenerate={handleAiGenerate}
+      />
+
+      <ManualCreateModal 
+        isOpen={isManualModalOpen}
+        onClose={() => setIsManualModalOpen(false)}
+        onCreate={handleManualCreate}
       />
     </MainLayout>
   );

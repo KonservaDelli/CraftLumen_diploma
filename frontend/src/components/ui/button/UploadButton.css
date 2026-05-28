@@ -1,0 +1,36 @@
+.upload-button-wrapper {
+  width: 100%;
+  max-width: 450px;
+}
+
+.upload-custom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 15px;
+  border-radius: 17px;
+  width: 100%;
+  
+  background-color: transparent;
+  border: 2px solid var(--purple-card);
+  color: var(--text-light);
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.upload-custom-btn:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 7px var(--purple-card);
+  transform: translateY(-1px);
+  color: var(--text-light);
+}
+
+.upload-btn-text {
+  user-select: none;
+}
