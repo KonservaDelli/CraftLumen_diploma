@@ -13,8 +13,23 @@ const InfoProject = ({
   onAssistantToggle,
   palette = [] 
 }) => {
-  // Перевіряємо, чи є дані в палітрі
-  const hasPalette = palette && palette.length > 0;
+  
+  // 1. Безпечний парсинг палітри
+  // Якщо палітра прийшла як рядок JSON з бази, перетворюємо її в масив
+  const getParsedPalette = () => {
+    if (typeof palette === 'string') {
+      try {
+        return JSON.parse(palette);
+      } catch (e) {
+        console.error("Помилка парсингу палітри:", e);
+        return [];
+      }
+    }
+    return Array.isArray(palette) ? palette : [];
+  };
+
+  const currentPalette = getParsedPalette();
+  const hasPalette = currentPalette.length > 0;
 
   return (
     <div className={`info-project-card ${hasPalette ? 'with-palette' : 'no-palette'}`}>
@@ -34,7 +49,7 @@ const InfoProject = ({
         <div className="project-main-row">
           <h1 className="project-title">{projectName}</h1>
           <div className="project-event-wrapper">
-            <EventButton eventName={eventName} />
+            <EventButton eventName={eventName || "Без події"} />
           </div>
         </div>
       </div>
@@ -50,14 +65,15 @@ const InfoProject = ({
           <span className="assistant-text">Помічник з таймменеджменту</span>
         </div>
 
-        {/* Рендеримо секцію палітри тільки якщо вона є */}
+        {/* 2. Рендеримо секцію палітри */}
         {hasPalette && (
           <div className="palette-section">
-            {palette.map((color, index) => (
+            {currentPalette.map((item, index) => (
               <PaletBlock 
                 key={index} 
-                hex={color.hex} 
-                label={color.label} 
+                // Використовуємо item.color (як приходить з AI) або item.hex (для сумісності)
+                hex={item.color || item.hex} 
+                label={item.label} 
               />
             ))}
           </div>

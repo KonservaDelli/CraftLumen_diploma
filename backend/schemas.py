@@ -10,7 +10,7 @@ class UserOut(BaseModel):
     email: str
     class Config:
         from_attributes = True
-        
+
 class TaskBase(BaseModel):
     title: str
     completed: bool = False
@@ -36,7 +36,7 @@ class ProjectOut(BaseModel):
     end_date: Optional[str] = None
     progress: int
     sections: List[SectionOut] = [] # Тепер це список об'єктів
-
+    palette: Optional[str] = None
     class Config:
         from_attributes = True
 

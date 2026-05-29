@@ -11,3 +11,4 @@ pydantic[email]
 python-jose[cryptography]==3.3.0
 alembic==1.13.1
 python-multipart
+openai

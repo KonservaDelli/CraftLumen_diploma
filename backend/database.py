@@ -8,22 +8,18 @@ from dotenv import load_dotenv
 load_dotenv()
 SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
-#очікування поки хост підніметься
+# Очікування підключення до бази (особливо важливо для Docker)
 for i in range(10):
     try:
         engine = create_engine(SQLALCHEMY_DATABASE_URL)
         engine.connect()
-        print("Хост підключен")
+        print("Хост підключено успішно")
         break
     except Exception as e:
+        print(f"Очікування бази даних... ({i+1}/10)")
         time.sleep(2)
 else:
-    raise Exception("Не можливо підключитись до хосту")
-#Двигун
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+    raise Exception("Не вдалося підключитись до бази даних")
 
-#Створення сесії для запитів
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-#Базовий клас для майбутніх таблиць
 Base = declarative_base()

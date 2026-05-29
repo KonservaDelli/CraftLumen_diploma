@@ -1,17 +1,19 @@
 from fastapi import FastAPI, Depends, HTTPException, status, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy.orm import Session
+from typing import List, Optional
+import os
+import json
+import re
+import uuid
+
+# Ваші локальні файли
 import models
 import schemas
 import tokens
-import os
-import shutil
-import json
-import re
-import time
 from database import engine, SessionLocal
-from sqlalchemy.orm import Session
-from typing import List, Optional
+from ai_module import analyze_character_image
 
 # Створення таблиць
 models.Base.metadata.create_all(bind=engine)
@@ -93,47 +95,63 @@ async def create_project(
     db: Session = Depends(get_db)
 ):
     project_slug = generate_slug(title)
-    
-    existing = db.query(models.Project).filter(models.Project.slug == project_slug).first()
-    if existing:
-        project_slug = f"{project_slug}-{int(time.time())}"
-
     image_url = None
+    ai_data = None
+    # 1. ОБРОБКА ЗОБРАЖЕННЯ ТА AI
     if image:
+        # Генеруємо унікальне ім'я файлу
         file_extension = os.path.splitext(image.filename)[1]
-        filename = f"{project_slug}{file_extension}"
-        file_path = os.path.join("uploads", filename)
+        file_name = f"{uuid.uuid4()}{file_extension}"
+        file_path = os.path.join("uploads", file_name)
         
+        # Читаємо контент один раз
+        content = await image.read()
+        
+        # Зберігаємо файл на диск
         with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(image.file, buffer)
-        image_url = f"http://localhost:8000/uploads/{filename}"
+            buffer.write(content)
+        
+        # Формуємо URL для фронтенда
+        image_url = f"http://localhost:8000/uploads/{file_name}"
 
+        # ВИКЛИК AI (передаємо вже прочитаний контент)
+        try:
+            ai_data = analyze_character_image(content)
+        except Exception as e:
+            print(f"AI Error: {e}")
+
+    # 2. СТВОРЕННЯ ОБ'ЄКТА ПРОЄКТУ
     new_project = models.Project(
         title=title,
         slug=project_slug,
-        end_date=endDate if endDate else None,
+        end_date=endDate,
         image_url=image_url,
-        progress=0
+        palette=json.dumps(ai_data["palette"]) if ai_data else "[]"
     )
-
     db.add(new_project)
-    db.flush() 
+    db.flush() # Отримуємо id проєкту
 
-    # Створюємо розділи (ВИПРАВЛЕНА ЛОГІКА ТУТ)
+    # 3. ДОДАВАННЯ РОЗДІЛІВ ВІД AI (якщо вони є)
+    if ai_data:
+        for s_item in ai_data.get("sections", []):
+            section = models.ProjectSection(title=s_item["title"], project_id=new_project.id)
+            db.add(section)
+            db.flush()
+            
+            for t_title in s_item.get("tasks", []):
+                task = models.Task(title=t_title, section_id=section.id)
+                db.add(task)
+
+    # 4. ДОДАВАННЯ РОЗДІЛІВ ВІД КОРИСТУВАЧА (якщо прийшли з форми)
     try:
-        section_data = json.loads(sections)
-        for item in section_data:
-            # Якщо фронтенд прислав об'єкт {"title": "..."} - беремо title
-            # Якщо просто рядок - беремо рядок
-            if isinstance(item, dict):
-                s_name = item.get("title", "Новий розділ")
-            else:
-                s_name = str(item)
-                
-            new_section = models.ProjectSection(title=s_name, project_id=new_project.id)
-            db.add(new_section)
+        user_sections = json.loads(sections)
+        for item in user_sections:
+            s_name = item.get("title") if isinstance(item, dict) else str(item)
+            if s_name:
+                new_section = models.ProjectSection(title=s_name, project_id=new_project.id)
+                db.add(new_section)
     except Exception as e:
-        print(f"Error parsing sections: {e}")
+        print(f"Error parsing user sections: {e}")
 
     db.commit()
     db.refresh(new_project)

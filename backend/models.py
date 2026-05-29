@@ -18,7 +18,7 @@ class Project(Base):
     start_date = Column(String, default=lambda: datetime.datetime.now().strftime("%d.%m.%Y"))
     end_date = Column(String, nullable=True)
     progress = Column(Integer, default=0)
-    
+    palette = Column(String, nullable=True)
     # Зв'язок з розділами
     sections = relationship("ProjectSection", back_populates="project", cascade="all, delete-orphan")
 
