@@ -6,37 +6,39 @@ import schemas
 import tokens
 import os
 import shutil
-from database import engine, SessionLocal, Base
+import json
+import re
+import time
+from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from typing import List, Optional
 
+# Створення таблиць
 models.Base.metadata.create_all(bind=engine)
+
 app = FastAPI()
 
-#статична папка для зображень
+# Статична папка для зображень
 if not os.path.exists("uploads"):
     os.makedirs("uploads")
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
 
-#підключення до бд
+# Налаштування CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # В розробці можна залишити так
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Підключення до БД
 def get_db():
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], # Дозволяє запити з будь-якого домену
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 def generate_slug(text: str) -> str:
     ukr_to_eng = {
@@ -47,7 +49,6 @@ def generate_slug(text: str) -> str:
     }
     cleaned = text.lower().strip()
     slug = "".join([ukr_to_eng.get(char, char) for char in cleaned])
-    import re
     slug = re.sub(r'[^a-z0-9-_]', '', slug)
     return re.sub(r'-+', '-', slug)
 
@@ -55,7 +56,7 @@ def generate_slug(text: str) -> str:
 def read_root():
     return {"message": "Cosplay Manager API is running"}
 
-#логіка реєстрації
+# Логіка реєстрації
 @app.post("/register", response_model=schemas.UserOut)
 def register(user_data: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(models.User).filter(models.User.email == user_data.email).first()
@@ -69,7 +70,7 @@ def register(user_data: schemas.UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
 
-#логіка входу
+# Логіка входу
 @app.post("/login")
 def login(user_credentials: schemas.UserCreate, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.email == user_credentials.email).first()
@@ -82,7 +83,7 @@ def login(user_credentials: schemas.UserCreate, db: Session = Depends(get_db)):
     access_token = tokens.create_access_token(data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer"}
 
-#логіка проєкту
+# Логіка проєкту (ВИПРАВЛЕНО)
 @app.post("/api/projects", response_model=schemas.ProjectOut)
 async def create_project(
     title: str = Form(...),
@@ -93,10 +94,8 @@ async def create_project(
 ):
     project_slug = generate_slug(title)
     
-    # Перевірка на унікальність слага
     existing = db.query(models.Project).filter(models.Project.slug == project_slug).first()
     if existing:
-        import time
         project_slug = f"{project_slug}-{int(time.time())}"
 
     image_url = None
@@ -112,38 +111,51 @@ async def create_project(
     new_project = models.Project(
         title=title,
         slug=project_slug,
-        sections=sections,
         end_date=endDate if endDate else None,
         image_url=image_url,
         progress=0
     )
 
     db.add(new_project)
+    db.flush() 
+
+    # Створюємо розділи (ВИПРАВЛЕНА ЛОГІКА ТУТ)
+    try:
+        section_data = json.loads(sections)
+        for item in section_data:
+            # Якщо фронтенд прислав об'єкт {"title": "..."} - беремо title
+            # Якщо просто рядок - беремо рядок
+            if isinstance(item, dict):
+                s_name = item.get("title", "Новий розділ")
+            else:
+                s_name = str(item)
+                
+            new_section = models.ProjectSection(title=s_name, project_id=new_project.id)
+            db.add(new_section)
+    except Exception as e:
+        print(f"Error parsing sections: {e}")
+
     db.commit()
     db.refresh(new_project)
     return new_project
 
-# логіка отримання ісіх проєктів
 @app.get("/api/projects", response_model=List[schemas.ProjectOut])
 def get_projects(db: Session = Depends(get_db)):
     return db.query(models.Project).order_by(models.Project.id.desc()).all()
 
-# логіка отримання одного проєкту
 @app.get("/api/project/{slug}", response_model=schemas.ProjectOut)
 def get_project_by_slug(slug: str, db: Session = Depends(get_db)):
     project = db.query(models.Project).filter(models.Project.slug == slug).first()
     if not project:
-        raise HTTPException(status_code=404, detail="Проєкт не знайдено в базі даних")
+        raise HTTPException(status_code=404, detail="Проєкт не знайдено")
     return project
 
-# логіка видалення проєкту
 @app.delete("/api/projects/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_project(project_id: int, db: Session = Depends(get_db)):
     project = db.query(models.Project).filter(models.Project.id == project_id).first()
     if not project:
-        raise HTTPException(status_code=404, detail="Проєкт не знайдено в базі даних")
+        raise HTTPException(status_code=404, detail="Проєкт не знайдено")
     
-    # видалення зображення з папки
     if project.image_url:
         filename = project.image_url.split("/")[-1]
         file_path = os.path.join("uploads", filename)
@@ -152,5 +164,21 @@ def delete_project(project_id: int, db: Session = Depends(get_db)):
 
     db.delete(project)
     db.commit()
-    
     return None
+
+@app.post("/api/tasks", response_model=schemas.TaskOut)
+def add_task(task_data: schemas.TaskCreate, db: Session = Depends(get_db)):
+    new_task = models.Task(title=task_data.title, section_id=task_data.section_id)
+    db.add(new_task)
+    db.commit()
+    db.refresh(new_task)
+    return new_task
+
+@app.patch("/api/tasks/{task_id}/toggle")
+def toggle_task(task_id: int, db: Session = Depends(get_db)):
+    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    if not task:
+        raise HTTPException(status_code=404)
+    task.completed = not task.completed
+    db.commit()
+    return {"status": "success", "completed": task.completed}

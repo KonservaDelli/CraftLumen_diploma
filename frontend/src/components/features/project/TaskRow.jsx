@@ -24,11 +24,13 @@ const TaskRow = ({ task, onToggle, aiEnabled }) => {
         <div className="lp-checkbox-wrapper">
           <ToDoCheckbox checked={task.completed} onChange={onToggle} />
         </div>
-        <span className="lp-task-text">{task.text}</span>
+        {/* ВИПРАВЛЕНО: замість task.text використовуємо task.title */}
+        <span className="lp-task-text">{task.title}</span>
       </div>
 
       <div className="lp-task-right">
         <div className="lp-date-wrapper">
+          {/* Якщо в БД колонка називається due_date, змініть тут теж */}
           {task.date ? (
             <div className="lp-date-block">
               <div className="lp-main-date">{formatDate(task.date)}</div>

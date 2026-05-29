@@ -42,7 +42,13 @@ const SectionBlock = ({ section, onAddTask, onToggle, aiEnabled }) => {
 
   const submit = () => {
     if (!taskText.trim()) return;
-    onAddTask(section.id, { text: taskText, date: taskDate });
+    
+    // Передаємо об'єкт з даними завдання
+    onAddTask(section.id, { 
+      text: taskText, 
+      date: taskDate 
+    });
+    
     setTaskText('');
     setTaskDate('');
     setIsAdding(false);

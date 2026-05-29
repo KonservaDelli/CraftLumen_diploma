@@ -1,18 +1,32 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
+from pydantic import BaseModel
+from typing import List, Optional
 
 class UserCreate(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
 class UserOut(BaseModel):
     id: int
-    email: EmailStr
+    email: str
+    class Config:
+        from_attributes = True
+        
+class TaskBase(BaseModel):
+    title: str
+    completed: bool = False
 
+class TaskOut(TaskBase):
+    id: int
     class Config:
         from_attributes = True
 
-# Передача фронтенду даних про проєкт
+class SectionOut(BaseModel):
+    id: int
+    title: str
+    tasks: List[TaskOut] = []
+    class Config:
+        from_attributes = True
+
 class ProjectOut(BaseModel):
     id: int
     title: str
@@ -21,7 +35,12 @@ class ProjectOut(BaseModel):
     start_date: str
     end_date: Optional[str] = None
     progress: int
-    sections: Optional[str] = None
+    sections: List[SectionOut] = [] # Тепер це список об'єктів
 
     class Config:
         from_attributes = True
+
+# Для створення завдання
+class TaskCreate(BaseModel):
+    title: str
+    section_id: int

@@ -26,19 +26,16 @@ const ProjectPage = () => {
         const response = await fetch(`http://localhost:8000/api/project/${projectSlug}`);
         if (!response.ok) throw new Error('Проєкт не знайдено');
         const data = await response.json();
+        
         setProjectData(data);
-
-        const parsedSections = data.sections 
-          ? (typeof data.sections === 'string' ? JSON.parse(data.sections) : data.sections)
-          : [];
-        setSections(parsedSections);
+        // ТЕПЕР: просто беремо sections, бо це вже масив з БД
+        setSections(data.sections || []); 
       } catch (error) {
         console.error("Помилка завантаження:", error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchProject();
   }, [projectSlug]);
 
