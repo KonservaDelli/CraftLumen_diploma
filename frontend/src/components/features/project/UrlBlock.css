@@ -1,5 +1,5 @@
 .url-block {
-  width: 365px;
+  width: 100%;
   background-color: var(--bg-dark);
   border: 4px solid var(--purple-card);
   border-radius: 20px;

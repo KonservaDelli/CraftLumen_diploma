@@ -1,112 +1,140 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import MainLayout from '../../components/layout/MainLayout';
-import Button from '../../components/ui/button/Button';
+import ProjectAvatar from '../../components/ui/icon/ProjectAvatar';
+import InfoProject from '../../components/features/project/InfoProject';
+import ProjectProgress from '../../components/ui/progress/ProjectProgress';
+import ListProject from '../../components/features/project/ListProject';
+import Notebook from '../../components/features/project/Notebook';
+import UrlBlock from '../../components/features/project/UrlBlock';
+import SquareButton from '../../components/ui/button/SquareButton';
+
 import './ProjectPage.css';
 
 const ProjectPage = () => {
-  const { projectSlug } = useParams(); 
+  const { projectSlug } = useParams();
   const navigate = useNavigate();
-  const [project, setProject] = useState(null);
-  const [error, setError] = useState(false);
+  const [projectData, setProjectData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isAssistantActive, setIsAssistantActive] = useState(true);
+  const [showOptions, setShowOptions] = useState(false);
+  const [sections, setSections] = useState([]);
 
-  // Завантаження певного проєкту
   useEffect(() => {
-    fetch(`http://localhost:8000/api/project/${projectSlug}`)
-      .then(res => {
-        if (!res.ok) throw new Error("Проєкт відсутній в БД");
-        return res.json();
-      })
-      .then(data => setProject(data))
-      .catch(err => {
-        console.error(err);
-        setError(true);
-      });
+    const fetchProject = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/project/${projectSlug}`);
+        if (!response.ok) throw new Error('Проєкт не знайдено');
+        const data = await response.json();
+        setProjectData(data);
+
+        const parsedSections = data.sections 
+          ? (typeof data.sections === 'string' ? JSON.parse(data.sections) : data.sections)
+          : [];
+        setSections(parsedSections);
+      } catch (error) {
+        console.error("Помилка завантаження:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProject();
   }, [projectSlug]);
-  // Видалення проєкту
-  const handleDeleteFromPage = async () => {
-    if (!project) return;
-    
-    const isConfirmed = window.confirm(`Ви впевнені, що хочете видалити проєкт "${project.title}"?`);
-    if (!isConfirmed) return;
 
-    try {
-      const response = await fetch(`http://localhost:8000/api/projects/${project.id}`, {
-        method: 'DELETE'
-      });
+  if (loading) return <MainLayout><div className="loader">Завантаження...</div></MainLayout>;
+  
+  if (!projectData) {
+    return (
+      <MainLayout>
+        <div className="error-container">
+          <h2>Проєкт не знайдено</h2>
+          <SquareButton type="back" onClick={() => navigate('/projects')} />
+        </div>
+      </MainLayout>
+    );
+  }
 
-      if (!response.ok) throw new Error("Не вдалося видалити проєкт");
+  const handleDelete = async () => {
+    if (window.confirm("Видалити цей проєкт?")) {
+      await fetch(`http://localhost:8000/api/projects/${projectData.id}`, { method: 'DELETE' });
       navigate('/projects');
-
-    } catch (error) {
-      console.error("Помилка при видаленні:", error);
-      alert("Не вдалося видалити проєкт");
     }
   };
 
-  if (error) {
-    return (
-      <MainLayout>
-        <div style={{ padding: '40px', color: '#fff', textAlign: 'center' }}>
-          <h2>Проєкт "{projectSlug}" не знайдено в базі даних.</h2>
-          <div style={{ marginTop: '20px' }}>
-            <Button text="Назад до бібліотеки" variant="primary" onClick={() => navigate('/projects')} />
-          </div>
-        </div>
-      </MainLayout>
-    );
-  }
+  const calculateProgress = () => {
+    const allTasks = sections.flatMap(s => s.tasks || []);
+    if (allTasks.length === 0) return 0;
+    const completedTasks = allTasks.filter(t => t.completed).length;
+    return Math.round((completedTasks / allTasks.length) * 100);
+  };
 
-  if (!project) {
-    return (
-      <MainLayout>
-        <div style={{ padding: '40px', color: '#fff', textAlign: 'center' }}>
-          <p>Завантаження даних косплей-проєкту...</p>
-        </div>
-      </MainLayout>
-    );
-  }
+  // Використовуємо цю змінну нижче
+  const projectProgressValue = calculateProgress();
 
   return (
     <MainLayout>
-      <div style={{ padding: '40px', color: '#fff' }}>
-        <header style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '20px' }}>
-          <Button 
-            text="Назад" 
-            variant="primary" 
-            onClick={() => navigate('/projects')} 
-          />
-          <h1 style={{ fontFamily: 'Tektur, sans-serif', margin: 0 }}>
-            Проєкт: {project.title}
-          </h1>
-
-          <Button 
-            text="Видалити проєкт" 
-            variant="danger"
-            onClick={handleDeleteFromPage} 
-          />
+      <div className="project-page-content">
+        <header className="project-page-header">
+          <div className="header-left">
+            <SquareButton type="back" onClick={() => navigate('/projects')} />
+            <h1 className="page-title">
+              СТОРІНКА ПРОЄКТА: <span className="accent-text">{projectData.title}</span>
+            </h1>
+          </div>
+          
+          <div className="header-right">
+            <div className="options-wrapper">
+              <SquareButton type="menu" onClick={() => setShowOptions(!showOptions)} />
+              {showOptions && (
+                <div className="options-dropdown">
+                  <button className="dropdown-item delete" onClick={handleDelete}>Видалити проєкт</button>
+                </div>
+              )}
+            </div>
+          </div>
         </header>
-        <div className="card-horizontal-divider" style={{ margin: '20px 0', height: '2px', backgroundColor: 'var(--accent-purple)' }}></div>
-        
-        <div className="project-page-content" style={{ display: 'flex', gap: '40px', marginTop: '30px', flexWrap: 'wrap' }}>
-          <div className="project-page-image-wrapper">
-            <img 
-              src={project.image_url || '/default-project.jpg'} 
-              alt={project.title} 
-              style={{ width: '100%', maxWidth: '400px', height: 'auto', aspectRatio: '1/1', objectFit: 'cover', borderRadius: '12px', border: '2px solid var(--accent-purple)' }} 
+
+        <div className="project-grid-container">
+          {/* Ліва частина: Зображення */}
+          <section className="grid-avatar">
+            <ProjectAvatar src={projectData.image_url} alt={projectData.title} />
+          </section>
+
+          {/* Права частина: Інфо + Прогрес */}
+          <section className="grid-info-column">
+            <InfoProject 
+              projectName={projectData.title}
+              startDate={projectData.start_date}
+              endDate={projectData.end_date}
+              eventName={projectData.eventName || "Не вказано"}
+              palette={projectData.palette || []}
+              isAssistantActive={isAssistantActive}
+              onAssistantToggle={setIsAssistantActive}
+            />
+
+            <div className="progress-section-wrapper">
+              <h3 className="progress-label">Прогрес</h3>
+              <ProjectProgress value={projectProgressValue} />
+            </div>
+          </section>
+        </div>
+
+        {/* НИЖНІЙ БЛОК: Завдання (3) + Сайдбар (1) */}
+        <div className="project-bottom-grid">
+          <div className="grid-tasks-area">
+            <ListProject 
+              sections={sections} 
+              setSections={setSections} 
+              aiEnabled={isAssistantActive} 
             />
           </div>
 
-          <div className="project-page-info" style={{ fontFamily: 'Fira Sans, sans-serif', fontSize: '18px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <p>Дата створення:{project.start_date}</p>
-            <p>Дедлайн: {project.end_date || "Не вказано"}</p>
-            <p>Поточний прогрес крафту: {project.progress}%</p>
-            <div style={{ width: '250px', height: '10px', backgroundColor: '#333', borderRadius: '5px', overflow: 'hidden', marginTop: '5px' }}>
-              <div style={{ width: `${project.progress}%`, height: '100%', backgroundColor: 'var(--accent-purple)' }}></div>
-            </div>
-          </div>
+          <aside className="grid-sidebar">
+            <Notebook initialItems={[]} />
+            <UrlBlock initialLinks={[]} />
+          </aside>
         </div>
-
       </div>
     </MainLayout>
   );

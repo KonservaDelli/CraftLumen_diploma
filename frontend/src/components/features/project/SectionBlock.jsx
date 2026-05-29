@@ -68,6 +68,7 @@ const SectionBlock = ({ section, onAddTask, onToggle, aiEnabled }) => {
 
       {isAdding && (
         <div className="lp-add-popup" ref={formRef}>
+          <button className="lp-popup-close" onClick={() => setIsAdding(false)}>✕</button>
           <input 
             className="lp-popup-input" 
             placeholder="Назва завдання"

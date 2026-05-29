@@ -19,3 +19,4 @@ class Project(Base):
     start_date = Column(String, default=lambda: datetime.datetime.now().strftime("%d.%m.%Y"))
     end_date = Column(String, nullable=True)
     progress = Column(Integer, default=0)
+    sections = Column(String, nullable=True)

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react'; // Видалили useState з імпорту
 import SectionBlock from './SectionBlock.jsx';
 import './ListProject.css';
 
-const ListProject = ({ initialSections = [], aiEnabled = true }) => {
-  const [sections, setSections] = useState(initialSections);
-
+const ListProject = ({ sections, setSections, aiEnabled = true }) => {
+  
   const handleAddTask = (sectionId, newTask) => {
     setSections(prev => prev.map(section => {
       if (section.id === sectionId) {
@@ -22,7 +21,7 @@ const ListProject = ({ initialSections = [], aiEnabled = true }) => {
       if (section.id === sectionId) {
         return {
           ...section,
-          tasks: section.tasks.map(t => t.id === taskId ? { ...t, completed: !t.completed } : t)
+          tasks: (section.tasks || []).map(t => t.id === taskId ? { ...t, completed: !t.completed } : t)
         };
       }
       return section;
@@ -31,7 +30,6 @@ const ListProject = ({ initialSections = [], aiEnabled = true }) => {
 
   return (
     <div className="lp-main-wrapper">
-      <h2 className="lp-global-title">To-do list</h2>
       <div className="lp-sections-list">
         {sections.map(section => (
           <SectionBlock 

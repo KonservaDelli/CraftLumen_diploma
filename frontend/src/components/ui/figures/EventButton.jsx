@@ -1,9 +1,6 @@
 import React from 'react';
 import './EventButton.css';
 
-/**
- * Компонент кнопки події з двома станами (обрано/не обрано)
- */
 const EventButton = ({ eventName }) => {
   const isEventSelected = !!eventName;
   const displayLabel = eventName ? eventName : "Оберіть подію";

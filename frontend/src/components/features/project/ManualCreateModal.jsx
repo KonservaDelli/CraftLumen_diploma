@@ -6,7 +6,6 @@ import DeadlineProject from '../../ui/date/DeadlineProject';
 import UploadButton from '../../ui/button/UploadButton';
 import Button from '../../ui/button/Button';
 
-// Фейковий список подій для пошукового інпуту
 const MOCK_EVENTS = [
   "Fancon 2026",
   "Comic Con Ukraine 2026",
@@ -24,10 +23,8 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
 
   if (!isOpen) return null;
 
-  // Обов'язкові поля для активації кнопки створення
   const isFormValid = characterName.trim() !== "" && sections.trim() !== "";
 
-  // Відфільтровані підказки подій для SearchInput
   const filteredSuggestions = MOCK_EVENTS.filter(ev =>
     ev.toLowerCase().includes(eventQuery.toLowerCase())
   );
@@ -38,16 +35,24 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
 
     setIsSubmitting(true);
     
-    // Передаємо всі зібрані дані вгору до батьківського компонента
+    const sectionsArray = sections
+      .split(',') // Розбиваємо по комі
+      .map(s => s.trim()) // Видаляємо пробіли по боках
+      .filter(s => s !== "") // Видаляємо порожні елементи
+      .map((name, index) => ({
+        id: index + 1,
+        title: name,
+        tasks: []
+      }));
+
     await onCreate({
       title: characterName,
-      sections: sections,
+      sections: JSON.stringify(sectionsArray), // Перетворюємо в рядок для передачі
       event: eventQuery,
       endDate: deadline,
       image: selectedFile
     });
 
-    // Скидаємо поля після успішного закриття
     setCharacterName("");
     setSections("");
     setEventQuery("");
@@ -59,15 +64,10 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        
-        {/* Хрестик для виходу з попапу */}
         <button className="modal-close-btn" onClick={onClose}>&times;</button>
-        
         <h2 className="modal-title">СТВОРЕННЯ ПРОЄКТУ</h2>
 
         <form onSubmit={handleSubmit} className="modal-form-content">
-          
-          {/* 1. Поле для назви персонажа (Обов'язкове) */}
           <div className="modal-input-group">
             <label className="modal-label">
               Ім'я персонажа<span className="important-star">*</span>
@@ -79,7 +79,6 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
             />
           </div>
 
-          {/* 2. Велике поле для розділів завдань (Обов'язкове) */}
           <div className="modal-input-group">
             <label className="modal-label">
               Розділи проєкту (через кому або з нового рядка)<span className="important-star">*</span>
@@ -92,7 +91,6 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
             />
           </div>
 
-          {/* 3. Поле прив'язаної події (Пошукове, Необов'язкове) */}
           <div className="modal-input-group">
             <label className="modal-label">Прив'язати фестиваль / подію</label>
             <SearchInput 
@@ -105,7 +103,6 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
             />
           </div>
 
-          {/* 4. Поле дати закінчення проєкту (Необов'язкове) */}
           <div className="modal-input-group">
             <label className="modal-label">Дедлайн закінчення проєкту</label>
             <DeadlineProject 
@@ -115,7 +112,6 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
             />
           </div>
 
-          {/* 5. Кнопка завантаження референсу персонажа (Необов'язкове, без прев'ю) */}
           <div className="modal-input-group">
             <label className="modal-label">Референс персонажа</label>
             <UploadButton 
@@ -125,7 +121,6 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
             />
           </div>
 
-          {/* 6. Кнопка створення проєкту */}
           <div className="modal-actions-row">
             <Button 
               text={isSubmitting ? "Створення..." : "Створити проєкт"} 

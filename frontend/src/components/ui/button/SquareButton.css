@@ -9,8 +9,8 @@
 }
 
 .square-btn-content {
-  width: 46px;
-  height: 46px;
+  width: 54px;
+  height: 54px;
   background-color: transparent;
   border: 2px solid var(--purple-card);
   border-radius: 12px;

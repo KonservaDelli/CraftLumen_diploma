@@ -21,6 +21,7 @@ class ProjectOut(BaseModel):
     start_date: str
     end_date: Optional[str] = None
     progress: int
+    sections: Optional[str] = None
 
     class Config:
         from_attributes = True

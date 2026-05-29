@@ -32,7 +32,7 @@ def get_db():
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"], # Дозволяє запити з будь-якого домену
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -86,6 +86,7 @@ def login(user_credentials: schemas.UserCreate, db: Session = Depends(get_db)):
 @app.post("/api/projects", response_model=schemas.ProjectOut)
 async def create_project(
     title: str = Form(...),
+    sections: str = Form("[]"),
     endDate: Optional[str] = Form(None),
     image: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db)
@@ -111,6 +112,7 @@ async def create_project(
     new_project = models.Project(
         title=title,
         slug=project_slug,
+        sections=sections,
         end_date=endDate if endDate else None,
         image_url=image_url,
         progress=0

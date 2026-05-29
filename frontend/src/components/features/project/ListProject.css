@@ -50,9 +50,10 @@
 }
 
 .lp-add-popup {
+  position: relative;
   background: transparent;
   border-radius: 0 15px;
-  padding: 15px;
+  padding: 35px 15px 15px 15px;
   margin-top: 18px;
   border: 2px solid var(--purple-card);
   box-shadow: 0 0 12px var(--bg-dark);
@@ -233,4 +234,23 @@
 
 .lp-popup-submit:hover {
   transform: translateY(1px);
+}
+
+.lp-popup-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+  padding: 5px;
+  line-height: 1;
+}
+
+.lp-popup-close:hover {
+  opacity: 1;
 }
