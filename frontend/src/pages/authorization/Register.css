@@ -29,6 +29,7 @@
     display: flex;
     align-items: flex-end;  
 }
+
 .submit_active, .submit{
     height: 100%;
     flex: 1;          
@@ -36,6 +37,7 @@
     padding: 0 10px;
     text-decoration: none; 
 }
+
 .submit_active{
     display: flex;         
     justify-content: center; 
@@ -44,6 +46,7 @@
     background: var(--bg-dark);
     color: var(--text-light);
 }
+
 .submit {
     display: flex;         
     justify-content: center; 
@@ -51,6 +54,7 @@
     border-radius: 5px 5px 0 0;
     color: var(--bg-dark);
 }
+
 .underline{
     margin-left: 102px;
     width: 36%;
@@ -59,17 +63,21 @@
     border-radius: 10px;
     background: var(--bg-dark);
 }
+
 .form-content{
     margin-top: 80px;
     margin-left: 102px;
 }
+
 .text{
     font-size: 40px;
 }
+
 .input{
     display: flex;
     padding-top: 40px;
 }
+
 .input input{
   height: 40px;
   width: 26%;
@@ -80,6 +88,7 @@
   font-family: "Fira Sans", sans-serif;
   font-weight: 400;
 }
+
 .form-content button{
     margin-top: 40px;
     width: 20%;

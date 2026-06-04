@@ -1,0 +1,78 @@
+.events-page-container {
+  padding: 40px 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.events-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.events-page-title {
+  font-family: 'Tektur', sans-serif;
+  color: var(--text-light);
+  font-size: 48px;
+  font-weight: 600;
+}
+
+.events-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.search-section {
+  flex: 1; 
+}
+
+.date-section {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.date-section .deadline-input-wrapper {
+  max-width: none;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 450px); 
+  gap: 35px;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  justify-content: flex-start;
+}
+
+.events-status-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: var(--text-light);
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 18px;
+}
+
+.error-message {
+  color: #ff4d4d;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  width: 100%;
+  
+  color: var(--text-light);
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  opacity: 0.8;
+  text-align: center;
+}

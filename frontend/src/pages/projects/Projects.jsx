@@ -7,6 +7,7 @@ import UserAvatar from '../../components/ui/icon/UserAvatar';
 import ProjectsCard from '../../components/features/project/ProjectsCard';
 import AiCreateModal from '../../components/features/project/AiCreateModal';
 import ManualCreateModal from '../../components/features/project/ManualCreateModal';
+import api from '../../services/api';
 import './Projects.css';
 
 const UKRAINIAN_MONTHS = [
@@ -30,21 +31,33 @@ const Projects = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [isManualModalOpen, setIsManualModalOpen] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState("");
 
-  //Завантаження всіх проєктів при старті сторінки
+  //Завантаження аватарки профілю
   useEffect(() => {
-    fetch('http://localhost:8000/api/projects')
-      .then(res => res.json())
-      .then(data => {
-        const mappedProjects = data.map(project => ({
+    api.get('/api/profile')
+      .then(res => {
+        if (res.data && res.data.avatarUrl) {
+          setAvatarUrl(res.data.avatarUrl);
+        }
+      })
+      .catch(err => console.error("Помилка завантаження аватарки:", err));
+  }, []);
+
+  //Завантаження проєктів
+  useEffect(() => {
+    api.get('/api/projects')
+      .then(res => {
+        const mappedProjects = res.data.map(project => ({
           id: project.id,
           title: project.title,
           slug: project.slug,
           startDate: project.start_date ? formatStringDate(project.start_date) : '',
           endDate: project.end_date ? formatStringDate(project.end_date) : null,
           progress: project.progress,
-          urgentTasksCount: 0,
-          image: project.image_url
+          sections: project.sections || [], 
+          urgentTasksCount: project.urgentTasksCount || 0, 
+          image: project.image_url || '/default-project.jpg'
         }));
         setProjects(mappedProjects);
         setIsLoading(false);
@@ -61,81 +74,56 @@ const Projects = () => {
 
   const handleSearch = (query) => setSearchQuery(query);
   
-  // Збереження проєкту аі
+  //Генерація проєкту через AI
   const handleAiGenerate = async (newData) => {
     try {
       const formData = new FormData();
       formData.append('title', newData.title || "Новий АІ Проєкт");
-      if (newData.endDate) {
-        formData.append('endDate', newData.endDate);
-      }
-      if (newData.image) {
-        formData.append('image', newData.image);
-      }
+      if (newData.endDate) formData.append('endDate', newData.endDate);
+      if (newData.event) formData.append('event', newData.event);
+      if (newData.image) formData.append('image', newData.image);
 
-      const response = await fetch('http://localhost:8000/api/projects', {
-        method: 'POST',
-        body: formData
+      const response = await api.post('/api/projects', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
       
-      if (!response.ok) throw new Error("Помилка при створенні проєкту на сервері");
-      
-      const createdProject = await response.json();
       setIsAiModalOpen(false);
-      navigate(`/project/${createdProject.slug}`);
+      navigate(`/project/${response.data.slug}`);
     } catch (error) {
       console.error("Не вдалося згенерувати проєкт:", error);
       alert("Сталася помилка при збереженні проєкту в базу даних");
     }
   };
-  // Збереження проєкту ручне
+
+  //Ручне створення проєкту
   const handleManualCreate = async (formDataFields) => {
     try {
       const formData = new FormData();
       formData.append('title', formDataFields.title);
-      
-      // Передаємо блоки/розділи завдань рядком (бекенд розпарсить за комою чи з нового рядка)
       formData.append('sections', formDataFields.sections);
       
-      if (formDataFields.event) {
-        formData.append('event_name', formDataFields.event);
-      }
-      if (formDataFields.endDate) {
-        formData.append('endDate', formDataFields.endDate);
-      }
-      if (formDataFields.image) {
-        formData.append('image', formDataFields.image);
-      }
+      if (formDataFields.event) formData.append('event', formDataFields.event); 
+      if (formDataFields.endDate) formData.append('endDate', formDataFields.endDate);
+      if (formDataFields.image) formData.append('image', formDataFields.image);
 
-      const response = await fetch('http://localhost:8000/api/projects', {
-        method: 'POST',
-        body: formData
+      const response = await api.post('/api/projects', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
 
-      if (!response.ok) throw new Error("Не вдалося створити проєкт вручну");
-
-      const createdProject = await response.json();
       setIsManualModalOpen(false);
-      
-      // ✨ Миттєво перенаправляємо користувача на сторінку створеного персонажа
-      navigate(`/project/${createdProject.slug}`);
-
+      navigate(`/project/${response.data.slug}`);
     } catch (error) {
       console.error("Помилка ручного створення проєкту:", error);
       alert("Не вдалося зберегти проєкт. Перевірте з'єднання з сервером.");
     }
   };
-  // Видалення проєкту
+
+  //Видалення проєкту
   const handleDeleteProject = async (projectId) => {
     const isConfirmed = window.confirm("Ви впевнені, що хочете видалити цей проєкт?");
     if (!isConfirmed) return;
     try {
-      const response = await fetch(`http://localhost:8000/api/projects/${projectId}`, {
-        method: 'DELETE'
-      });
-
-      if (!response.ok) throw new Error("Не вдалося видалити проєкт на сервері");
-
+      await api.delete(`/api/projects/${projectId}`);
       setProjects(prevProjects => prevProjects.filter(p => p.id !== projectId));
     } catch (error) {
       console.error("Помилка при видаленні проєкту:", error);
@@ -149,7 +137,7 @@ const Projects = () => {
         <header className="projects-header">
           <div className="header-top-row">
             <h1 className="page-title-main">Бібліотека проєктів</h1>
-            <UserAvatar size={70} />
+            <UserAvatar src={avatarUrl} size={70} onClick={() => navigate('/profile')} />
           </div>
           <div className="card-horizontal-divider"></div>
           <div className="header-controls">
@@ -163,7 +151,7 @@ const Projects = () => {
 
         <div className="projects-scroll-container">
           {isLoading ? (
-            <p style={{ color: '#fff', textAlign: 'center', marginTop: '40px' }}>Завантаження бібліотеки проєктів...</p>
+            <p style={{ color: 'var(--text-light)', textAlign: 'center', marginTop: '40px' }}>Завантаження бібліотеки проєктів...</p>
           ) : (
             <div className="projects-grid">
               {filteredProjects.map(project => (
@@ -178,7 +166,6 @@ const Projects = () => {
         onClose={() => setIsAiModalOpen(false)} 
         onGenerate={handleAiGenerate}
       />
-
       <ManualCreateModal 
         isOpen={isManualModalOpen}
         onClose={() => setIsManualModalOpen(false)}
