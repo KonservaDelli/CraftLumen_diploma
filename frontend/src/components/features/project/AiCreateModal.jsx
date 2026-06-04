@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageUpload from './ImageUpload';
 import BaseInput from '../../ui/input/BaseInput';
 import SearchInput from '../../ui/input/SearchInput';
@@ -6,31 +6,42 @@ import DeadlineProject from '../../ui/date/DeadlineProject';
 import Button from '../../ui/button/Button';
 import './AiCreateModal.css';
 
-const mockEvents = [
-  { name: "Akhibara 2026", date: "02.06.2026" },
-  { name: "Comic Con Ukraine", date: "15.09.2026" },
-  { name: "Atlas Weekend", date: "10.07.2026" },
-  { name: "Fancon", date: "6.07.2026" }
-];
-
 const AiCreateModal = ({ isOpen, onClose, onGenerate }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [characterName, setCharacterName] = useState("");
   const [eventQuery, setEventQuery] = useState("");
   const [deadlineDate, setDeadlineDate] = useState("");
+  const [realEvents, setRealEvents] = useState([]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const fetchEvents = async () => {
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/external-events');
+          if (response.ok) {
+            const data = await response.json();
+            setRealEvents(data);
+          }
+        } catch (err) {
+          console.error("Не вдалося завантажити події для модального вікна:", err);
+        }
+      };
+      fetchEvents();
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const isFormValid = selectedFile !== null && characterName.trim() !== "";
-  const availableSuggestions = mockEvents
-    .map(e => e.name)
-    .filter(name => name.toLowerCase().includes(eventQuery.toLowerCase()));
+  const availableSuggestions = realEvents
+    .map(e => e.title)
+    .filter(title => title && title.toLowerCase().includes(eventQuery.toLowerCase()));
 
   const handleEventSelect = (eventName) => {
     setEventQuery(eventName);
-    const foundEvent = mockEvents.find(e => e.name === eventName);
+    const foundEvent = realEvents.find(e => e.title === eventName);
     if (foundEvent) {
-      setDeadlineDate(foundEvent.date);
+      setDeadlineDate(foundEvent.start_date || foundEvent.display_date || "");
     }
   };
 

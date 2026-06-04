@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BaseInput from '../../ui/input/BaseInput';
 import SearchInput from '../../ui/input/SearchInput';
 import TextArea from '../../ui/input/TextArea';
 import DeadlineProject from '../../ui/date/DeadlineProject';
 import UploadButton from '../../ui/button/UploadButton';
 import Button from '../../ui/button/Button';
-
-const MOCK_EVENTS = [
-  "Fancon 2026",
-  "Comic Con Ukraine 2026",
-  "Anicon 2026",
-  "Akihabara 2026"
-];
 
 const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
   const [characterName, setCharacterName] = useState("");
@@ -20,14 +13,39 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
   const [deadline, setDeadline] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [realEvents, setRealEvents] = useState([]);
+  useEffect(() => {
+    if (isOpen) {
+      const fetchEvents = async () => {
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/external-events');
+          if (response.ok) {
+            const data = await response.json();
+            setRealEvents(data);
+          }
+        } catch (err) {
+          console.error("Не вдалося завантажити події для модального вікна:", err);
+        }
+      };
+      fetchEvents();
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const isFormValid = characterName.trim() !== "" && sections.trim() !== "";
+  const filteredSuggestions = realEvents
+    .map(ev => ev.title)
+    .filter(title => title && title.toLowerCase().includes(eventQuery.toLowerCase()));
 
-  const filteredSuggestions = MOCK_EVENTS.filter(ev =>
-    ev.toLowerCase().includes(eventQuery.toLowerCase())
-  );
+  // автоматичне заповнення дедлайн по обрані події
+  const handleEventSelect = (eventName) => {
+    setEventQuery(eventName);
+    const foundEvent = realEvents.find(ev => ev.title === eventName);
+    if (foundEvent) {
+      setDeadline(foundEvent.start_date || foundEvent.display_date || "");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,9 +54,9 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
     setIsSubmitting(true);
     
     const sectionsArray = sections
-      .split(',') // Розбиваємо по комі
-      .map(s => s.trim()) // Видаляємо пробіли по боках
-      .filter(s => s !== "") // Видаляємо порожні елементи
+      .split(',')
+      .map(s => s.trim())
+      .filter(s => s !== "")
       .map((name, index) => ({
         id: index + 1,
         title: name,
@@ -47,9 +65,9 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
 
     await onCreate({
       title: characterName,
-      sections: JSON.stringify(sectionsArray), // Перетворюємо в рядок для передачі
-      event: eventQuery,
-      endDate: deadline,
+      sections: JSON.stringify(sectionsArray),
+      event: eventQuery || null,
+      endDate: deadline || null,
       image: selectedFile
     });
 
@@ -92,13 +110,13 @@ const ManualCreateModal = ({ isOpen, onClose, onCreate }) => {
           </div>
 
           <div className="modal-input-group">
-            <label className="modal-label">Прив'язати фестиваль / подію</label>
+            <label className="modal-label">Зв'язати з подією</label>
             <SearchInput 
               placeholder="Почніть вводити назву події..."
               value={eventQuery}
               onSearch={setEventQuery}
               suggestions={filteredSuggestions}
-              onSuggestionSelect={setEventQuery}
+              onSuggestionSelect={handleEventSelect}
               showIcon={false}
             />
           </div>
