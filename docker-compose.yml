@@ -15,6 +15,11 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+    env_file:
+      - ./backend/.env
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     depends_on:
       - db
 

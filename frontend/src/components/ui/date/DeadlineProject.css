@@ -1,0 +1,93 @@
+.deadline-input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  border: 2px solid var(--purple-card);
+  border-radius: 15px;
+  padding: 4px 23px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  height: 50px;
+}
+
+.deadline-input-wrapper:focus-within,
+.deadline-input-wrapper:hover {
+  box-shadow: 0 0 7px #49418A99;
+
+}
+
+.deadline-text-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-light);
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 2%;
+  padding: 0;
+  width: 100%;
+}
+
+.deadline-text-input::placeholder {
+  color: var(--text-light);
+}
+
+.deadline-icon-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+  margin-bottom: 3px;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.deadline-icon-box:hover {
+  color: var(--accent-purple);
+}
+
+.deadline-calendar-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.deadline-hidden-date-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Зміна стилю стандарт календаря*/
+.deadline-hidden-date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.01;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8) sepia(1) hue-rotate(240deg) saturate(3);
+  }
+}
+.deadline-hidden-date-input {
+  color-scheme: dark;
+}

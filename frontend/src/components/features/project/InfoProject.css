@@ -1,0 +1,94 @@
+.info-project-card {
+  background-color: var(--accent-purple-light);
+  border: 2px solid var(--purple-card);
+  border-radius: 20px;
+  padding: 25px 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100% !important; /* Замість 750px */
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.info-project-card.with-palette {
+  height: 334px;
+}
+
+.info-project-card.no-palette {
+  height: 220px;
+}
+
+.info-dates-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.date-item {
+  display: flex;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 18px;
+}
+
+.date-label {
+  color: var(--text-light);
+  opacity: 0.9;
+}
+
+.project-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-title {
+  color: var(--text-light);
+  font-family: 'Tektur', sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.horizontal-divider-bold {
+  width: 100%;
+  height: 4px;
+  background-color: var(--bg-dark);
+  border-radius: 4px;
+  margin: 5px 0;
+}
+
+.info-project-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.assistant-section {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  gap: 30px;
+}
+
+.assistant-text {
+  color: var(--accent-yellow);
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.palette-section {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  flex-wrap: nowrap;
+}
+.info-project-card.with-palette, 
+.info-project-card.no-palette {
+  height: auto; /* Дозволяємо сітці керувати висотою */
+  flex-grow: 1;
+  margin-bottom: 20px; /* Відступ до прогресу */
+}

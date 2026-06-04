@@ -48,3 +48,38 @@
   object-fit: contain;
   padding-bottom: 3px;
 }
+
+/*Дизайн генерації проєкту*/
+.btn-generate {
+  background: linear-gradient(to bottom, var(--accent-purple) 40%, #8F87F1 60%, var(--text-light) 100%);
+  color: var(--text-light);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 4%;
+  box-shadow: 0 0 15px var(--accent-purple-light);
+  gap: 20px;
+}
+
+.btn-generate:hover {
+  box-shadow: 0 0 20px var(--accent-purple-light);
+  transform: translateY(-1px);
+}
+
+.btn-generate:active {
+  transform: translateY(1px);
+}
+
+.button-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  padding-bottom: 3px;
+}
+
+/*Дизайн видалення проєкту*/
+.btn-danger {
+  background-color: transparent;
+  color: var(--accent-yellow);
+  border: 2px solid var(--accent-yellow);
+  box-shadow: 0 0 10px var(--accent-yellow);
+}

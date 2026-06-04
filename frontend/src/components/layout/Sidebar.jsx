@@ -7,16 +7,16 @@ const Sidebar = ({ onLogout }) => {
   const location = useLocation();
 
   const menuItems = [
-    { name: 'Головна',path: '/home', icon: 'home-icon.png', activeIcon: 'home-icon-active.png' },
-    { name: 'Проєкти', path: '/projects', icon: 'project-icon.png', activeIcon: 'project-icon-active.png' },
-    { name: 'Події', path: '/events', icon: 'event-icon.png', activeIcon: 'event-icon-active.png' },
-    { name: 'Профіль', path: '/profile', icon: 'profile-icon.png', activeIcon: 'profile-icon-active.png' },
+    { name: 'Головна',path: '/home', icon: '/home-icon.png', activeIcon: 'home-icon-active.png' },
+    { name: 'Проєкти', path: '/projects', icon: '/project-icon.png', activeIcon: 'project-icon-active.png' },
+    { name: 'Події', path: '/events', icon: '/event-icon.png', activeIcon: 'event-icon-active.png' },
+    { name: 'Профіль', path: '/profile', icon: '/profile-icon.png', activeIcon: 'profile-icon-active.png' },
   ];
 
   return (
     <div className="sidebar-container">
       <div className="sidebar-logo">
-        <img src="logo.png" alt="Logo" />
+        <img src="/logo.png" alt="Logo" />
       </div>
 
       <nav className="sidebar-menu">
@@ -42,7 +42,7 @@ const Sidebar = ({ onLogout }) => {
       <div className="sidebar-footer">
         <div className="menu-item exit" onClick={onLogout}>
           <div className="icon-wrapper">
-            <img src="exit-icon.png" alt="Exit" />
+            <img src="/exit-icon.png" alt="Exit" />
           </div>
           <span>Вийти</span>
         </div>

@@ -1,10 +1,9 @@
-/* Внутрішній контейнер, який знаходиться ПРАВОРУЧ від сайдбару */
 .projects-main-content {
   flex-grow: 1;
-  padding: 40px 70px 0 70px; /* Прибираємо нижній падінг, бо скрол всередині */
+  padding: 40px 70px 0 70px;
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Займає всю висоту, яку дає MainLayout */
+  height: 100vh;
   box-sizing: border-box;
   background-color: var(--bg-dark);
   overflow: hidden;
@@ -34,13 +33,13 @@
 }
 
 .header-controls > :first-child { 
-  flex: 3; /* Пошук буде розширюватися активніше (коефіцієнт 3) */
+  flex: 3;
 }
 
 .buttons-group {
   display: flex;
   gap: 20px;
-  flex: 1; /* Кнопки теж розширюються, але в 3 рази повільніше за пошук */
+  flex: 1;
   min-width: fit-content;
 }
 
@@ -52,34 +51,25 @@
   border-radius: 2px;
 }
 
-/* Контейнер для карток зі скролом */
 .projects-scroll-container {
   flex-grow: 1;
   overflow-y: auto;
-  overflow-x: hidden; /* ПРИБИРАЄ нижній скролбар */
-  
-  /* Виштовхуємо скролбар до краю екрана за межі падінгів батька */
+  overflow-x: hidden;
   margin-right: -57px; 
-  /* Повертаємо сітку з картками на місце, щоб вони не липли до краю */
   padding-right: 57px; 
-  
   padding-bottom: 40px;
   box-sizing: border-box;
 }
 
-/* Налаштування самого гріда */
 .projects-grid {
   display: grid;
   justify-content: start; 
   grid-template-columns: repeat(auto-fill, minmax(330px, 330px));
-  /* Робимо зазор між картками, який трохи адаптується */
   gap: 30px 20px; 
-  
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Стилізація скролбару для сучасного вигляду */
 .projects-scroll-container::-webkit-scrollbar {
   width: 6px;
 }

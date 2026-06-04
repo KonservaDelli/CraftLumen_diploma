@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import './ProjectsCard.css';
 import { useNavigate } from 'react-router-dom';
 
-const ProjectsCard = ({ projects }) => {
+const ProjectsCard = ({ projects, onDelete }) => {
   const navigate = useNavigate();
   const [showOptions, setShowOptions] = useState(false);
-  
-  // Логіка статусів
   const hasUrgentTasks = projects.urgentTasksCount > 0;
   const [activeStatus, setActiveStatus] = useState(hasUrgentTasks ? 'warning' : 'progress');
 
+  //перехід на сторінку по його назві або id
   const handleCardClick = () => {
-    navigate(`/project/${projects.id}`);
+    navigate(`/project/${projects.slug || projects.id}`);
   };
 
   const toggleOptions = (e) => {
@@ -21,7 +20,10 @@ const ProjectsCard = ({ projects }) => {
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    console.log("Видалити проєкт", projects.id);
+    setShowOptions(false);
+    if (onDelete) {
+      onDelete(projects.id);
+    }
   };
 
   const renderDate = () => {
@@ -50,24 +52,21 @@ const ProjectsCard = ({ projects }) => {
         <div className="card-horizontal-line"></div>
 
         <div className="card-status-footer" onClick={(e) => e.stopPropagation()}> 
-          {/* Додаємо onClick на весь футер, щоб кліки по тексту теж не перекидали на сторінку */}
-          
           <div className={`status-icons-wrapper ${!hasUrgentTasks ? 'single-icon' : ''}`}>
             <div 
               className={`status-box percent-box ${activeStatus === 'progress' ? 'active' : ''}`}
               onClick={(e) => {
-                e.stopPropagation(); // Зупиняємо клік тут
+                e.stopPropagation();
                 setActiveStatus('progress');
               }}
             >
               %
             </div>
-
             {hasUrgentTasks && (
               <div 
                 className={`status-box warning-box ${activeStatus === 'warning' ? 'active' : ''}`}
                 onClick={(e) => {
-                  e.stopPropagation(); // Зупиняємо клік тут
+                  e.stopPropagation();
                   setActiveStatus('warning');
                 }}
               >

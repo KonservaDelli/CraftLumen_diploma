@@ -1,0 +1,16 @@
+.project-avatar-card {
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: 16 / 10;
+  border-radius: 15px;
+  border: 4px solid var(--purple-card);
+  overflow: hidden;
+}
+
+.avatar-image-content {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}

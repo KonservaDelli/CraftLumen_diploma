@@ -1,0 +1,364 @@
+.project-page-content {
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.project-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.page-title {
+  color: var(--text-light);
+  font-family: 'Tektur', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Кнопка три крапки */
+.options-wrapper {
+  position: relative;
+}
+
+.dots-button {
+  width: 50px;
+  height: 50px;
+  background-color: var(--accent-purple-light);
+  border: 3px solid var(--purple-card);
+  border-radius: 12px;
+  color: white;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding-bottom: 15px; /* Для центрування крапок */
+}
+
+.options-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: var(--bg-dark);
+  border: 2px solid var(--purple-card);
+  border-radius: 10px;
+  z-index: 100;
+  min-width: 180px;
+  overflow: hidden;
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 12px 15px;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.dropdown-item:hover {
+  background: var(--accent-purple-light);
+}
+
+.dropdown-item.delete {
+  color: #ff5555;
+}
+
+/* Сітка */
+.project-main-grid {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+.project-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  flex: 1;
+}
+
+.project-side-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.progress-section {
+  width: 750px; /* Відповідно до ширини InfoProjectCard */
+}
+
+
+.project-page-content {
+  padding: 30px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  background-color: var(--bg-dark);
+  min-height: 100vh;
+}
+
+.project-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.page-title {
+  color: var(--text-light);
+  font-family: 'Tektur', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.accent-text {
+  color: var(--accent-purple); /* або інший колір з вашої палітри */
+}
+
+/* Випадаюче меню */
+.options-wrapper {
+  position: relative;
+}
+
+.options-dropdown {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background: var(--accent-purple-light);
+  border: 2px solid var(--purple-card);
+  border-radius: 12px;
+  z-index: 1000;
+  min-width: 200px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  color: var(--text-light);
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover:not(.disabled) {
+  background: var(--purple-card);
+}
+
+.dropdown-item.delete {
+  color: #ff6b6b;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--purple-card);
+  margin: 0 10px;
+}
+
+/* Сітка контенту */
+.project-main-grid {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.project-info-column {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 750px; /* Фіксовано під розмір InfoProject */
+}
+
+.avatar-wrapper {
+  width: 100%;
+}
+
+.progress-container-fixed {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.project-side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.project-tasks-wrapper {
+  margin-top: 10px;
+  max-width: 1155px;
+}
+
+/* Основний контейнер шапки */
+.project-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Центруємо вміст по горизонталі */
+  position: relative;      /* Для позиціювання кнопок */
+  min-height: 60px;
+  margin-bottom: 30px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center; /* Центруємо заголовок */
+}
+.header-left .square-neon-btn:first-child {
+  position: absolute;
+  left: 0;
+}
+/* Стиль заголовка як на скріншоті 2 */
+.page-title {
+  color: var(--text-light); /* Білий колір для "СТОРІНКА ПРОЄКТА:" *//* Або ваш основний шрифт */
+  font-size: 42px;
+  font-weight: 800; /* Дуже жирний */
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0;
+  padding: 0 60px;
+}
+
+/* Фіолетовий колір назви проєкту */
+.accent-text {
+  color: #7E74FB; /* Світло-фіолетовий неон як на макеті */
+  margin-left: 10px;
+}
+
+/* Вирівнювання правої частини (меню) */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+/* Основний контейнер для верхнього блоку */
+.project-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Рівно навпіл */
+  gap: 40px;
+  align-items: stretch; /* Важливо: розтягує блоки по висоті */
+}
+
+/* Лівий блок з фото */
+.grid-avatar {
+  width: 100%;
+}
+
+.project-avatar-card {
+  width: 100%;
+  max-width: none; /* Прибираємо обмеження */
+  height: 100%;    /* Займає всю висоту */
+  aspect-ratio: auto; /* Висота тепер диктується контентом або сіткою */
+}
+
+/* Правий стовпчик */
+.grid-info-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Розштовхує інфо та прогрес по краях */
+}
+
+/* Сама картка інформації */
+.info-project-card {
+  width: 100% !important; /* Тепер вона адаптивна, а не фіксована 750px */
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Блок прогресу */
+.progress-section-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progress-label {
+  color: var(--text-light);
+  font-family: 'Tektur', sans-serif;
+  font-size: 30px;
+  letter-spacing: 3px;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Обмеження для верхнього блоку */
+.project-grid-container.top-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-height: 500px; /* Ваше обмеження */
+  align-items: stretch;
+}
+
+/* Корекція висоти аватара під ліміт */
+.grid-avatar .project-avatar-card {
+  height: 100%;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+/* Корекція правої колонки під ліміт */
+.grid-info-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 500px;
+}
+
+/* --- НИЖНЯ СІТКА 3:1 --- */
+.project-bottom-grid {
+  display: grid;
+  /* Завдання займають 3 частини, сайдбар 1 частину */
+  grid-template-columns: 3fr 1fr; 
+  gap: 40px;
+  align-items: start; /* Щоб блоки починалися з однієї висоти */
+}
+
+.grid-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Відступ між Нотатником та Посиланнями */
+}
+
+/* Щоб компоненти займали всю ширину своєї колонки */
+.notebook-card, .url-block {
+  width: 100% !important; 
+  max-width: none !important;
+  box-sizing: border-box;
+}
+
+.lp-main-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+}
