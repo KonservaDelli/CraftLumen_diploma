@@ -5,11 +5,12 @@
   color: var(--text-light);
   border: 4px solid var(--purple-card);
   font-family: 'Tektur', sans-serif;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .lp-global-title {
-  font-size: 38px;
+  font-size: 32px;
+  letter-spacing: 2px;
   margin-bottom: 20px;
 }
 
@@ -29,42 +30,45 @@
 }
 
 .lp-section-title {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 3px;
 }
 
 .lp-add-btn-trigger {
   background: none;
   border: none;
   color: var(--text-light);
-  font-size: 32px;
+  font-size: 36px;
   cursor: pointer;
   line-height: 1;
+  padding-bottom: 10px;
 }
 
 .lp-task-text {
   font-family: 'Fira Sans', sans-serif;
+  font-weight: 400;
   margin-left: 15px;
-  font-size: 16px;
+  font-size: 22px;
 }
 
 .lp-add-popup {
   position: relative;
-  background: transparent;
+  background: var(--purple-card);
   border-radius: 0 15px;
-  padding: 35px 15px 15px 15px;
+  padding: 50px 20px 10px;
   margin-top: 18px;
   border: 2px solid var(--purple-card);
-  box-shadow: 0 0 12px var(--bg-dark);
+  box-shadow: 0 4px 24px var(--bg-dark);
 }
 
 .lp-popup-input {
   width: 100%;
-  background: var(--bg-dark);
+  background: var(--accent-purple-light);
   border: none;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 12px;
+  padding: 11px;
+  font-size: 16px;
   color: var(--text-light);
   margin-bottom: 10px;
   outline: none;
@@ -79,7 +83,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center; 
-  padding: 12px 0;
+  padding: 20px 0 10px;
   border-bottom: 1px solid var(--purple-card);
   min-height: 64px;
 }
@@ -110,17 +114,20 @@
   align-items: flex-end;
   justify-content: center;
   position: relative;
+  padding-top: 12px;
 }
 
 .lp-main-date {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
+  letter-spacing: 1px;
+  font-weight: 600;
   color: var(--text-light);
-  transition: opacity 0.3s;
+  transition: all 0.3s ease;
 }
 
 .lp-ai-date {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--accent-yellow);
   opacity: 0.9;
   margin-top: 6px;
@@ -142,7 +149,7 @@
   color: rgba(255, 255, 255, 0.4);
   padding: 6px 12px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
   line-height: 1;
   display: block;
@@ -219,31 +226,31 @@
 
 .lp-popup-submit {
   height: 42px;
-  background: var(--purple-card);
-  color: var(--text-light);
+  background: var(--accent-purple-light);
+  color: #F1EBFFB2;
   border: none;
   border-radius: 10px;
   padding: 0 15px;
-  font-weight: 700;
-  font-size: 13px;
+  font-weight: 500;
+  font-size: 16px;
   cursor: pointer;
   white-space: nowrap;
-  border: 1px solid var(--accent-purple);
-  box-shadow: 0 0 8px var(--bg-dark);
+  border: 1px solid transparent;
 }
 
 .lp-popup-submit:hover {
   transform: translateY(1px);
+  color: var(--text-light);
 }
 
 .lp-popup-close {
   position: absolute;
-  top: 8px;
-  right: 12px;
+  top: 15px;
+  right: 15px;
   background: none;
   border: none;
   color: var(--text-light);
-  font-size: 16px;
+  font-size: 22px;
   cursor: pointer;
   opacity: 0.6;
   transition: opacity 0.2s, transform 0.2s;
@@ -253,4 +260,55 @@
 
 .lp-popup-close:hover {
   opacity: 1;
+}
+
+.lp-global-header-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.lp-section-add-popover {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 20;
+  width: 100%;
+  max-width: 500px;
+
+  background: var(--purple-card);
+  border: 3px solid var(--accent-purple);
+  border-radius: 0 20px;
+  padding: 20px;
+  box-shadow: 0 4px 24px var(--bg-dark);
+}
+
+.lp-popover-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.lp-popover-input-field {
+  flex: 1;
+  background: var(--accent-purple-light);
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  color: var(--text-light);
+  outline: none;
+}
+.lp-popover-input-field::placeholder {
+  color: var(--text-light);
+  opacity: 0.7;
+}
+.lp-popover-title {
+  font-family: 'Tektur', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
 }

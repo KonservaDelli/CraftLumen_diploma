@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import './Notebook.css';
 
-const Notebook = ({ title = "СПИСОК ПОКУПОК", initialItems = [] }) => {
-  const [items, setItems] = useState(initialItems);
+const Notebook = ({ title = "Нотатник", items = [], onAddItem, onRemoveItem }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
   const addItem = () => {
-    if (inputValue.trim()) {
-      setItems([...items, inputValue]);
+    if (inputValue.trim() && onAddItem) {
+      onAddItem(inputValue.trim());
       setInputValue('');
     }
     setIsAdding(false);
@@ -20,10 +19,6 @@ const Notebook = ({ title = "СПИСОК ПОКУПОК", initialItems = [] }) 
       setInputValue('');
       setIsAdding(false);
     }
-  };
-
-  const removeItem = (indexToRemove) => {
-    setItems(items.filter((_, index) => index !== indexToRemove));
   };
 
   const isEmpty = items.length === 0 && !isAdding;
@@ -44,16 +39,15 @@ const Notebook = ({ title = "СПИСОК ПОКУПОК", initialItems = [] }) 
           </div>
         ) : (
           <ul className="notebook-list">
-            {items.map((item, index) => (
-              <li key={index} className="notebook-item">
+            {items.map((item) => (
+              <li key={item.id} className="notebook-item">
                 <div className="item-marker" />
-                <span className="item-text">{item}</span>
-                <button className="remove-btn" onClick={() => removeItem(index)}>
+                <span className="item-text">{item.text}</span>
+                <button className="remove-btn" onClick={() => onRemoveItem && onRemoveItem(item.id)}>
                   ✕
                 </button>
               </li>
             ))}
-            
             {isAdding && (
               <li className="notebook-item adding">
                 <div className="item-marker" />
@@ -63,8 +57,10 @@ const Notebook = ({ title = "СПИСОК ПОКУПОК", initialItems = [] }) 
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onBlur={() => {
-                    setInputValue('');
-                    setIsAdding(false);
+                    setTimeout(() => {
+                      setInputValue('');
+                      setIsAdding(false);
+                    }, 200);
                   }}
                   onKeyDown={handleKeyDown}
                   placeholder="Введіть текст..."

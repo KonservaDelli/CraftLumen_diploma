@@ -23,7 +23,6 @@
   object-fit: cover;
 }
 
-/*Кнопка опцій*/
 .options-trigger {
   position: absolute;
   bottom: 116px;
@@ -49,7 +48,6 @@
   border-radius: 50%;
 }
 
-/* ГЕОМЕТРИЧНА ФОРМА ПАПКИ */
 .projects-card-content {
   background-image: url('fon-card.svg');
   margin-top: -130px; 
@@ -78,8 +76,8 @@
   font-weight: 600;
   margin-bottom: 10px;
   letter-spacing: 4%;
-  white-space: nowrap;/*Забороняє перенос рядку*/
-  overflow: hidden;/*Ховає те що невмістилось*/
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
   display: block;
   width: 100%;
@@ -135,7 +133,7 @@
   margin-top: 2px;
 }
 .status-icons-wrapper.single-icon .percent-box {
-  margin: 0 !important; /* Прибираємо будь-які напливи */
+  margin: 0 !important;
   width: 54px;
   height: 54px;
 }

@@ -29,7 +29,8 @@
   color: var(--text-light);
   font-family: 'Tektur', sans-serif;
   font-size: 24px;
-  font-weight: 700;
+  letter-spacing: 2px;
+  font-weight: 800;
   margin: 0;
 }
 
@@ -74,7 +75,7 @@
   border: 2px solid var(--purple-card);
   border-radius: 10px;
   padding: 9px 15px;
-  font-size: 16px;
+  font-size: 18px;
   outline: none;
   color: var(--text-light);
 }
@@ -133,7 +134,7 @@
 }
 
 .url-pill-label {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .url-delete-node {
@@ -159,7 +160,7 @@
 .url-empty-msg {
   color: var(--text-light);
   opacity: 0.4;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
   padding: 15px 0;
   line-height: 1.5;

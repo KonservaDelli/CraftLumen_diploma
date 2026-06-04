@@ -44,7 +44,6 @@ const SearchInput = ({
 
   return (
     <div className="search-input-wrapper" ref={wrapperRef}>
-      {/* drop-open прибирає заокруглення коли відкрито список */}
       <div className={`search-input-container ${isDropdownVisible ? 'drop-open' : ''}`}>
         <input
           type="text"

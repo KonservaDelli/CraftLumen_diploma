@@ -18,7 +18,7 @@ const UserAvatar = ({ src, size = 60, onClick }) => {
       }}
     >
       <img 
-        key={src} //скидає стан, якщо є новий src
+        key={src}
         src={currentSrc} 
         alt="User Profile" 
         className="user-avatar-img"

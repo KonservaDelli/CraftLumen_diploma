@@ -61,7 +61,6 @@ const ImageUpload = ({ onFileSelect }) => {
       />
       
       <div className="upload-content">
-        {/* Зображення встає замість тексту */}
         {preview && (
           <div className="preview-container">
             <img src={preview} alt="Preview" className="preview-image" />

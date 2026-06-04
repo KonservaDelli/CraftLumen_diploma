@@ -11,14 +11,37 @@
 }
 
 .sidebar-logo {
-  padding-left: 12%;
+  padding: 0 12%;           
   margin-top: 30px;
+  display: flex;            
+  align-items: center;
+  gap: 16px;
 }
 
 .sidebar-logo img {
-  width: 30%;
-  min-width: 72px;
+  width: 70px;
   height: auto;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-family: "Tektur", sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  display: flex;
+  flex-direction: column;
+  line-height: 0.95;
+}
+
+.logo-craft {
+  color: var(--accent-purple); 
+  text-shadow: 0 0 8px var(--purple-card);
+}
+
+.logo-lumen {
+  color: var(--accent-yellow);
+  text-shadow: 0 0 10px #FFCB5899;
 }
 .sidebar-menu{
   margin: auto 0;
@@ -50,8 +73,8 @@
 }
 
 .icon-wrapper {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
