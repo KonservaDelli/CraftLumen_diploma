@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './Login.css';
-
 import authorizathion_img from '../../assets/author_img.svg'
 
 const Login = () => {
@@ -27,10 +26,7 @@ const Login = () => {
       });
 
       console.log('Вхід успішний:', response.data);
-      
-      //збереження токену
       localStorage.setItem('token', response.data.access_token);
-      
       navigate('/');
       
     } catch (err) {
@@ -58,10 +54,6 @@ const Login = () => {
           </div>
           <button type= "submit" className='button'>Вхід</button>
         </form>
-
-        <footer>
-          <img src="" alt="" />
-        </footer>
 
         <img src={authorizathion_img} alt="" className="side_view" />
       </div>

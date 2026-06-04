@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './Register.css';
-
 import authorizathion_img from '../../assets/author_img.svg'
 
 const Register = () => {
@@ -13,10 +12,7 @@ const Register = () => {
     password: '',
     confirmPassword: ''
   });
-
   const [error, setError] = useState('');
-
-  //Оновлення даних при друці
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
@@ -24,21 +20,21 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //Перевірка на однаковість паролів
     if (formData.password !== formData.confirmPassword) {
       setError('Паролі не збігаються!');
       return;
     }
 
     try {
-      //Відправка запиту на бекенд 
+      localStorage.removeItem('token');
+
       const response = await api.post('/register', {
         email: formData.email,
         password: formData.password
       });
+      console.log('Реєстрація успішна:', response.data);
+      navigate('/login');
       
-      console.log(response.data);
-      navigate('/');
     } catch (err) {
       setError(err.response?.data?.detail || 'Сталася помилка при реєстрації');
     }
@@ -67,10 +63,6 @@ const Register = () => {
           </div>
           <button type= "submit" className='button'>Реєстрація</button>
         </form>
-
-        <footer>
-          <img src="" alt="" />
-        </footer>
         
         <img src={authorizathion_img} alt="" className="side_view" />
       </div>
