@@ -1,0 +1,83 @@
+.upcoming-events-container {
+  background: transparent;
+  border: 4px solid var(--purple-card);
+  border-radius: 30px;
+  padding: 20px 20px 30px  20px;
+  width: 100%;
+  position: relative;
+  font-family: 'Fira Sans', sans-serif;
+  overflow: hidden;
+  color: var(--text-light);
+}
+
+.ue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 0 10px 10px;
+  border-bottom: 3px solid var(--purple-card);
+}
+
+.ue-main-title {
+  font-family: 'Tektur', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.ue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ue-card {
+  position: relative;
+  background: var(--accent-purple-light);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 25px 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ue-card:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 12px var(--accent-purple);
+  transform: translateY(-2px);
+}
+
+.ue-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.ue-event-name {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.ue-date-placard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--accent-yellow);
+  width: 20%;
+  max-width: 160px;
+  height: 36px;
+  border-radius: 0 15px;
+  min-width: 100px;
+  box-shadow: 0 0 12px #FFCB5899;
+}
+
+.ue-date-text {
+  color: var(--bg-dark);
+  font-size: 16px;
+  font-weight: 600;
+}
