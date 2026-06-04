@@ -14,12 +14,44 @@ class UserOut(BaseModel):
 class TaskBase(BaseModel):
     title: str
     completed: bool = False
+    start_date: Optional[str] = None  
+    end_date: Optional[str] = None    
+
+class TaskCreate(BaseModel):
+    title: str
+    section_id: int
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
 
 class TaskOut(TaskBase):
     id: int
     class Config:
         from_attributes = True
+# Додайте в schemas.py
 
+class NotebookItemBase(BaseModel):
+    text: str
+
+class NotebookItemCreate(NotebookItemBase):
+    project_id: int
+
+class NotebookItemOut(NotebookItemBase):
+    id: int
+    class Config:
+        from_attributes = True
+
+class UrlLinkBase(BaseModel):
+    title: str
+    url: str
+
+class UrlLinkCreate(UrlLinkBase):
+    project_id: int
+
+class UrlLinkOut(UrlLinkBase):
+    id: int
+    class Config:
+        from_attributes = True        
+        
 class SectionOut(BaseModel):
     id: int
     title: str
@@ -35,12 +67,32 @@ class ProjectOut(BaseModel):
     start_date: str
     end_date: Optional[str] = None
     progress: int
-    sections: List[SectionOut] = [] # Тепер це список об'єктів
+    sections: List[SectionOut] = []
     palette: Optional[str] = None
+    event_name: Optional[str] = None
+    notebook_items: List[NotebookItemOut] = []
+    url_links: List[UrlLinkOut] = []
     class Config:
         from_attributes = True
 
-# Для створення завдання
-class TaskCreate(BaseModel):
+class ExternalEventOut(BaseModel):
+    id: int
     title: str
-    section_id: int
+    description: str
+    start_date: str
+    display_date: str
+    image_url: Optional[str] = None
+    event_url: Optional[str] = None
+    class Config:
+        from_attributes = True
+
+class TaskUpdateDates(BaseModel):
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+
+class ProjectEventUpdate(BaseModel):
+    event_name: Optional[str] = None
+
+class SectionCreate(BaseModel):
+    title: str
+    project_id: int

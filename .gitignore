@@ -6,3 +6,4 @@ db_data/
 *.stories.jsx
 *.stories.js
 .storybook/
+uploads/
