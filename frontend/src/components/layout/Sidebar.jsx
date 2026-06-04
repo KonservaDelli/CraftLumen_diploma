@@ -17,6 +17,10 @@ const Sidebar = ({ onLogout }) => {
     <div className="sidebar-container">
       <div className="sidebar-logo">
         <img src="/logo.png" alt="Logo" />
+        <span className="logo-text">
+          <span className="logo-craft">Craft</span>
+          <span className="logo-lumen">Lumen</span>
+        </span>
       </div>
 
       <nav className="sidebar-menu">
