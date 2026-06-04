@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import './UrlBlock.css';
 
-const UrlBlock = ({ title = "Колекція посилань", initialLinks = [] }) => {
-  const [links, setLinks] = useState(initialLinks);
+const UrlBlock = ({ title = "Колекція посилань", links = [], onAddLink, onRemoveLink }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newUrl, setNewUrl] = useState('');
-
   const handleAddLink = () => {
-    if (newTitle.trim() && newUrl.trim()) {
+    if (newTitle.trim() && newUrl.trim() && onAddLink) {
       const formattedUrl = newUrl.startsWith('http') ? newUrl : `https://${newUrl}`;
-      setLinks([...links, { title: newTitle, url: formattedUrl }]);
+      onAddLink(newTitle.trim(), formattedUrl.trim());
       setNewTitle('');
       setNewUrl('');
       setIsAdding(false);
@@ -55,15 +53,15 @@ const UrlBlock = ({ title = "Колекція посилань", initialLinks = 
           </div>
         ) : (
           <div className="url-list">
-            {links.map((link, index) => (
-              <div key={index} className="url-item">
+            {links.map((link) => (
+              <div key={link.id} className="url-item">
                 <a href={link.url} target="_blank" rel="noopener noreferrer" className="url-pill">
                   <img src="/url-icon.png" alt="" className="url-pill-icon" />
                   <span className="url-pill-label">{link.title}</span>
                 </a>
                 <button 
                   className="url-delete-node" 
-                  onClick={() => setLinks(links.filter((_, i) => i !== index))}
+                  onClick={() => onRemoveLink && onRemoveLink(link.id)}
                 >
                   ✕
                 </button>
