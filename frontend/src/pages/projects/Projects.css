@@ -20,7 +20,6 @@
   font-family: 'Tektur', sans-serif;
   color: var(--text-light);
   font-size: 48px;
-  margin: 0;
   font-weight: 600;
 }
 
@@ -51,6 +50,15 @@
   border-radius: 2px;
 }
 
+.projects-grid {
+  display: grid;
+  justify-content: start; 
+  grid-template-columns: repeat(auto-fill, minmax(330px, 330px));
+  gap: 30px 20px; 
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .projects-scroll-container {
   flex-grow: 1;
   overflow-y: auto;
@@ -58,15 +66,6 @@
   margin-right: -57px; 
   padding-right: 57px; 
   padding-bottom: 40px;
-  box-sizing: border-box;
-}
-
-.projects-grid {
-  display: grid;
-  justify-content: start; 
-  grid-template-columns: repeat(auto-fill, minmax(330px, 330px));
-  gap: 30px 20px; 
-  width: 100%;
   box-sizing: border-box;
 }
 
