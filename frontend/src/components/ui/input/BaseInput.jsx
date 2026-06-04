@@ -1,11 +1,11 @@
 import React from 'react';
 import './BaseInput.css';
 
-const BaseInput = ({ placeholder = "Назва персонажа", value, onChange, ...props }) => {
+const BaseInput = ({ placeholder = "Назва персонажа", value, onChange, type = "text", ...props }) => {
   return (
     <div className="base-input-wrapper">
       <input
-        type="text"
+        type={type}
         className="base-input-element"
         placeholder={placeholder}
         value={value}

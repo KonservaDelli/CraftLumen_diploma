@@ -20,7 +20,9 @@
   box-shadow: 0 0 8px var(--purple-card);
   transition: all 0.2s ease-in-out;
 }
-
+.square-btn-content:hover {
+  box-shadow: 0 0 10px var(--accent-purple);
+}
 .dots-icon {
   display: flex;
   flex-direction: column;
@@ -36,11 +38,50 @@
 }
 
 .back-arrow-img {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
+.icon-arrow-back {
+  font-size: 28px;
+  color: var(--accent-purple);
+}
+.square-neon-btn .square-btn-content {
+  color: var(--text-light);
+  opacity: 0.9;
+}
+.square-neon-btn.type-edit:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
 
-.square-neon-btn:hover .square-btn-content {
-  box-shadow: 0 0 12px var(--accent-purple);
+.square-neon-btn.type-save:hover {
+  opacity: 0.8;
+}
+
+.square-neon-btn.type-cancel:hover {
+  opacity: 0.8;
+}
+
+.icon-action-symbol {
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  line-height: 1;
+}
+
+.icon-menu-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-menu-dots span {
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-purple);
+  border-radius: 50%;
+  display: block;
 }

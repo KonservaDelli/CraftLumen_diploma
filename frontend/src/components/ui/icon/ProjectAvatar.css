@@ -1,16 +1,49 @@
 .project-avatar-card {
   width: 100%;
   max-width: 450px;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 1 / 1;
+  background-color: var(--purple-card);
   border-radius: 15px;
-  border: 4px solid var(--purple-card);
   overflow: hidden;
+  border: 4px solid var(--purple-card);
+  position: relative;
 }
 
 .avatar-image-content {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px;
   display: block;
+}
+
+.project-avatar-card.editable {
+  cursor: pointer;
+}
+
+.avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.project-avatar-card.editable:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.overlay-text {
+  color: var(--text-light);
+  opacity: 0.8;
+  font-size: 26px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  font-family: 'Fira Sans', sans-serif;
+  text-align: center;
 }

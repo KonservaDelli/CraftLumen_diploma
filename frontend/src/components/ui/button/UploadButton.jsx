@@ -18,7 +18,7 @@ const UploadButton = ({
     if (file && onFileSelect) {
       onFileSelect(file);
     }
-    e.target.value = null; // Скидання значення для повторного вибору
+    e.target.value = null;
   };
 
   return (
@@ -36,7 +36,6 @@ const UploadButton = ({
         className="upload-custom-btn" 
         onClick={handleButtonClick}
       >
-        {/* Вбудована SVG-іконка завантаження */}
         <svg 
           className="upload-btn-svg"
           width="20" 
